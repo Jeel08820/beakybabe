@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/:username",
-            "destination": "/profile.html?u=:username"
+            "source": "/((?!.*\\..*|api/).*)",
+            "destination": "/profile.html?u=$1"
         }
     ],
     "headers": [

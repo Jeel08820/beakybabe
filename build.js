@@ -32,7 +32,7 @@ function copyDir(src, destPath) {
 
 // Files and folders to include
 const includedExtensions = ['.html', '.css', '.js', '.json', '.xml', '.txt', '.md'];
-const excludedFiles = ['build.js', 'package.json', 'package-lock.json', 'vercel.json', 'netlify.toml', '.gitignore'];
+const excludedFiles = ['build.js', 'package.json', 'package-lock.json', 'netlify.toml', '.gitignore'];
 const includedDirs = ['assets', 'api', 'emails'];
 
 // Copy files from root
