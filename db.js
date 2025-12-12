@@ -329,8 +329,12 @@ const DB = {
 
     async createProduct(product) {
         const user = await Auth.getUser();
+        if (!user) {
+            return { data: null, error: { message: 'Not authenticated' } };
+        }
+
         const { data: products } = await this.getProducts();
-        const position = products.length;
+        const position = products ? products.length : 0;
 
         const { data, error } = await supabaseClient
             .from('products')
@@ -341,6 +345,8 @@ const DB = {
             })
             .select()
             .single();
+
+        if (error) console.error('Error creating product:', error);
         return { data, error };
     },
 

@@ -261,7 +261,15 @@
         });
 
         async function loadProducts() {
+            console.log('Loading products...');
             const { data: products, error } = await DB.getProducts();
+
+            if (error) {
+                console.error('Error loading products:', error);
+                return;
+            }
+
+            console.log('Products loaded:', products);
             currentProducts = products || [];
 
             document.getElementById('productCount').textContent = currentProducts.length;
