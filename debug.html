@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeakyBabe Debugger</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #111;
+            color: #fff;
+        }
+
+        .success {
+            color: #4ade80;
+        }
+
+        .error {
+            color: #f87171;
+        }
+
+        .warning {
+            color: #fbbf24;
+        }
+
+        .log {
+            margin-bottom: 5px;
+            border-bottom: 1px solid #333;
+            padding: 5px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #a855f7;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        pre {
+            background: #222;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🐞 BeakyBabe Diagnostic Tool</h1>
+    <p>This tool checks your connection, database tables, and permissions.</p>
+    <button onclick="runDiagnostics()">Run Diagnostics</button>
+    <div id="output"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="db.js"></script>
+    <script>
+        function log(msg, type = 'info', details = null) {
+            const div = document.createElement('div');
+            div.className = 'log';
+            const icon = type === 'success' ? '✅' : (type === 'error' ? '❌' : (type === 'warning' ? '⚠️' : 'ℹ️'));
+            div.innerHTML = `<span class="${type}">${icon} ${msg}</span>`;
+            if (details) {
+                const pre = document.createElement('pre');
+                pre.textContent = JSON.stringify(details, null, 2);
+                div.appendChild(pre);
+            }
+            document.getElementById('output').appendChild(div);
+        }
+
+        async function runDiagnostics() {
+            document.getElementById('output').innerHTML = '';
+            log('Starting diagnostics...', 'info');
+
+            // 1. Check Config
+            if (window.supabaseClient) {
+                log('Supabase Client initialized', 'success');
+            } else {
+                log('Supabase Client MISSING in window', 'error');
+                return;
+            }
+
+            // 2. Check Connection
+            try {
+                const { data, error } = await supabaseClient.from('profiles').select('count', { count: 'exact', head: true });
+                if (error) {
+                    log('Connection Check Failed', 'error', error);
+                } else {
+                    log('Connected to Supabase', 'success');
+                }
+            } catch (e) {
+                log('Connection Exception', 'error', e);
+            }
+
+            // 3. Check Auth
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                log('User NOT Logged In. Please login first.', 'warning');
+                log('Redirecting to login in 3 seconds...', 'info');
+                setTimeout(() => window.location.href = 'login.html', 3000);
+                return;
+            }
+            log('User Authenticated', 'success', { id: session.user.id, email: session.user.email });
+
+            const userId = session.user.id;
+
+            // 4. Check Profile
+            const { data: profile, error: profileError } = await DB.getProfile();
+            if (profileError) {
+                log('Profile Fetch Failed', 'error', profileError);
+            } else if (!profile) {
+                log('Profile Missing (You need to run the profile SQL)', 'error');
+            } else {
+                log('Profile Found', 'success', { username: profile.username });
+            }
+
+            // 5. Check Links permissions
+            const { data: links, error: linksError } = await DB.getLinks();
+            if (linksError) {
+                log('Links Permission/Fetch Error', 'error', linksError);
+            } else {
+                log(`Links Fetched: ${links.length} found`, 'success');
+            }
+
+            // 6. Check Products Permissions (Store)
+            log('Checking Store/Products...', 'info');
+            const { data: products, error: prodError } = await DB.getProducts();
+            if (prodError) {
+                log('Products table access FAILED (RLS issue or table missing)', 'error', prodError);
+
+                if (prodError.code === '42P01') {
+                    log('CRITICAL: "products" table does NOT exist.', 'error');
+                } else if (prodError.code === '42501') {
+                    log('CRITICAL: Permission Denied (Run the Products SQL Fix)', 'error');
+                }
+            } else {
+                log(`Products Fetched: ${products.length} found`, 'success');
+            }
+
+            // 7. Check Orders Permissions
+            log('Checking Orders...', 'info');
+            const { data: orders, error: ordersError } = await DB.getOrders();
+            if (ordersError) {
+                log('Orders table access FAILED', 'error', ordersError);
+                if (ordersError.code === '42P01') {
+                    log('CRITICAL: "orders" table does NOT exist.', 'error');
+                }
+            } else {
+                log(`Orders Fetched: ${orders.length} found`, 'success');
+            }
+
+            log('Diagnostics Complete.', 'info');
+        }
+    </script>
+</body>
+
+</html>
