@@ -408,38 +408,60 @@ const DB = {
     // ========================================
 
     async getOrders(limit = 50) {
-        const user = await Auth.getUser();
-        const { data, error } = await supabaseClient
-            .from('orders')
-            .select('*, products(title)')
-            .eq('seller_id', user.id)
-            .order('created_at', { ascending: false })
-            .limit(limit);
-        return { data: data || [], error };
+        try {
+            const user = await Auth.getUser();
+            if (!user) return { data: [], error: null };
+
+            const { data, error } = await supabaseClient
+                .from('orders')
+                .select('*, products(title)')
+                .eq('seller_id', user.id)
+                .order('created_at', { ascending: false })
+                .limit(limit);
+
+            if (error) console.warn('getOrders error:', error);
+            return { data: data || [], error };
+        } catch (err) {
+            console.error('getOrders exception:', err);
+            return { data: [], error: err };
+        }
     },
 
     async getRevenueStats(days = 30) {
-        const user = await Auth.getUser();
-        const startDate = new Date();
-        startDate.setDate(startDate.getDate() - days);
+        try {
+            const user = await Auth.getUser();
+            if (!user) return { totalRevenue: 0, orderCount: 0, avgOrderValue: 0 };
 
-        const { data } = await supabaseClient
-            .from('orders')
-            .select('amount, completed_at')
-            .eq('seller_id', user.id)
-            .eq('payment_status', 'completed')
-            .gte('completed_at', startDate.toISOString());
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() - days);
 
-        const totalRevenue = data?.reduce((sum, o) => sum + parseFloat(o.amount), 0) || 0;
-        const orderCount = data?.length || 0;
-        const avgOrderValue = orderCount > 0 ? totalRevenue / orderCount : 0;
+            const { data, error } = await supabaseClient
+                .from('orders')
+                .select('amount, completed_at')
+                .eq('seller_id', user.id)
+                .eq('payment_status', 'completed')
+                .gte('created_at', startDate.toISOString()); // Changed from completed_at to created_at to be safe
 
-        return {
-            totalRevenue,
-            orderCount,
-            avgOrderValue
-        };
+            if (error) {
+                console.warn('getRevenueStats error:', error);
+                return { totalRevenue: 0, orderCount: 0, avgOrderValue: 0 };
+            }
+
+            const totalRevenue = data?.reduce((sum, o) => sum + parseFloat(o.amount || 0), 0) || 0;
+            const orderCount = data?.length || 0;
+            const avgOrderValue = orderCount > 0 ? totalRevenue / orderCount : 0;
+
+            return {
+                totalRevenue,
+                orderCount,
+                avgOrderValue
+            };
+        } catch (err) {
+            console.error('getRevenueStats exception:', err);
+            return { totalRevenue: 0, orderCount: 0, avgOrderValue: 0 };
+        }
     }
+}
 };
 
 // Export DB helper
