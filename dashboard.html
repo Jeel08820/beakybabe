@@ -193,29 +193,12 @@
                     <div class="dashboard-card top-links">
                         <div class="card-header">
                             <h3>Top Performing Links</h3>
-                            <a href="#" class="view-all">View All →</a>
+                            <a href="links.html" class="view-all">View All →</a>
                         </div>
-                        <div class="links-list">
-                            <div class="link-item">
-                                <div class="link-info">
-                                    <span class="link-icon">📺</span>
-                                    <span class="link-name">Latest YouTube Video</span>
-                                </div>
-                                <span class="link-clicks">127 clicks</span>
-                            </div>
-                            <div class="link-item">
-                                <div class="link-info">
-                                    <span class="link-icon">📱</span>
-                                    <span class="link-name">Follow on TikTok</span>
-                                </div>
-                                <span class="link-clicks">89 clicks</span>
-                            </div>
-                            <div class="link-item">
-                                <div class="link-info">
-                                    <span class="link-icon">🛒</span>
-                                    <span class="link-name">Shop My Presets</span>
-                                </div>
-                                <span class="link-clicks">54 clicks</span>
+                        <div class="links-list" id="topLinksList">
+                            <div class="empty-state-small">
+                                <span>🔗</span>
+                                <p>No links yet. <a href="links.html">Add your first link</a></p>
                             </div>
                         </div>
                     </div>
@@ -226,77 +209,53 @@
                             <h3>Traffic Sources</h3>
                             <span class="time-range">Last 7 days</span>
                         </div>
-                        <div class="sources-list">
-                            <div class="source-item">
-                                <div class="source-info">
-                                    <span class="source-name">Instagram</span>
-                                    <div class="source-bar">
-                                        <div class="source-fill" style="width: 65%;"></div>
-                                    </div>
-                                </div>
-                                <span class="source-percent">65%</span>
-                            </div>
-                            <div class="source-item">
-                                <div class="source-info">
-                                    <span class="source-name">TikTok</span>
-                                    <div class="source-bar">
-                                        <div class="source-fill" style="width: 20%;"></div>
-                                    </div>
-                                </div>
-                                <span class="source-percent">20%</span>
-                            </div>
-                            <div class="source-item">
-                                <div class="source-info">
-                                    <span class="source-name">Twitter</span>
-                                    <div class="source-bar">
-                                        <div class="source-fill" style="width: 10%;"></div>
-                                    </div>
-                                </div>
-                                <span class="source-percent">10%</span>
-                            </div>
-                            <div class="source-item">
-                                <div class="source-info">
-                                    <span class="source-name">Direct</span>
-                                    <div class="source-bar">
-                                        <div class="source-fill" style="width: 5%;"></div>
-                                    </div>
-                                </div>
-                                <span class="source-percent">5%</span>
+                        <div class="sources-list" id="trafficSourcesList">
+                            <div class="empty-state-small">
+                                <span>📊</span>
+                                <p>No traffic data yet. Share your page to start tracking!</p>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Getting Started -->
-                <div class="dashboard-card getting-started">
-                    <h3>🚀 Complete Your Setup</h3>
-                    <p>Finish these steps to make the most of your BeakyBabe page:</p>
-                    <div class="checklist">
-                        <label class="checklist-item completed">
-                            <input type="checkbox" checked disabled>
-                            <span class="checkmark">✓</span>
-                            <span>Create your account</span>
-                        </label>
-                        <label class="checklist-item">
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                            <span>Add your first link</span>
-                        </label>
-                        <label class="checklist-item">
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                            <span>Upload a profile photo</span>
-                        </label>
-                        <label class="checklist-item">
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                            <span>Customize your theme</span>
-                        </label>
-                        <label class="checklist-item">
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                            <span>Share your link</span>
-                        </label>
+                    <!-- Recent Activity -->
+                    <div class="dashboard-card recent-activity">
+                        <div class="card-header">
+                            <h3>Quick Stats</h3>
+                        </div>
+                        <div class="activity-list" id="activityList">
+                            <div class="activity-item">
+                                <span class="activity-icon">📈</span>
+                                <div class="activity-info">
+                                    <span class="activity-text">Your profile is set up!</span>
+                                    <span class="activity-time">Get started by adding links</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Setup Checklist -->
+                    <div class="dashboard-card setup-checklist">
+                        <div class="card-header">
+                            <h3>🚀 Setup Checklist</h3>
+                        </div>
+                        <div class="checklist" id="checklistItems">
+                            <div class="checklist-item completed">
+                                <span class="check-icon">✓</span>
+                                <span>Create your account</span>
+                            </div>
+                            <div class="checklist-item" id="checkLinks">
+                                <span class="check-icon">○</span>
+                                <span>Add your first link</span>
+                            </div>
+                            <div class="checklist-item" id="checkTheme">
+                                <span class="check-icon">○</span>
+                                <span>Customize your theme</span>
+                            </div>
+                            <div class="checklist-item" id="checkShare">
+                                <span class="check-icon">○</span>
+                                <span>Share your page</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

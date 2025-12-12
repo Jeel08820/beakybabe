@@ -603,6 +603,33 @@
     text-align: right;
 }
 
+/* Empty State Small */
+.empty-state-small {
+    text-align: center;
+    padding: 24px 16px;
+    color: var(--text-muted);
+}
+
+.empty-state-small span {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.empty-state-small p {
+    font-size: 13px;
+    margin: 0;
+}
+
+.empty-state-small a {
+    color: var(--primary-light);
+    text-decoration: none;
+}
+
+.empty-state-small a:hover {
+    text-decoration: underline;
+}
+
 /* Getting Started */
 .getting-started {
     grid-column: span 2;
