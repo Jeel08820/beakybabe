@@ -179,8 +179,8 @@
                         <h3>Your BeakyBabe Link</h3>
                         <div class="link-display">
                             <div class="link-url">
-                                <span class="link-prefix">beakybabe.bio/</span>
-                                <span class="link-username" id="linkUsername">username</span>
+                                <span class="link-prefix">loading.../</span>
+                                <span class="link-username" id="linkUsername">...</span>
                             </div>
                             <button class="copy-btn" id="copyLinkBtn">
                                 <span>📋</span> Copy
@@ -353,6 +353,36 @@
 
         async function loadDashboardData() {
             try {
+                // Update link display
+                const user = await Auth.getUser();
+                const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+                const cleanUsername = userName.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                // Get current domain
+                const domain = window.location.hostname;
+                const protocol = window.location.protocol;
+                const port = window.location.port ? ':' + window.location.port : '';
+                const fullUrl = `${protocol}//${domain}${port}`;
+                const displayUrl = `${domain}/`;
+
+                document.getElementById('linkUsername').textContent = cleanUsername;
+                document.querySelector('.link-prefix').textContent = displayUrl;
+
+                // Update copy button
+                document.getElementById('copyLinkBtn').onclick = () => {
+                    // Correct URL construction: domain/profile.html?u=username
+                    // OR if using rewrites: domain/username
+                    const profileLink = `${fullUrl}/${cleanUsername}`;
+                    navigator.clipboard.writeText(profileLink);
+
+                    const btn = document.getElementById('copyLinkBtn');
+                    const originalHtml = btn.innerHTML;
+                    btn.innerHTML = '<span>✓</span> Copied';
+                    setTimeout(() => {
+                        btn.innerHTML = originalHtml;
+                    }, 2000);
+                };
+
                 // Load analytics summary
                 const summary = await DB.getAnalyticsSummary(30);
                 document.getElementById('totalViews').textContent = formatNumber(summary.views);
