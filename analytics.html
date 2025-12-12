@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | BeakyBabe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="analytics.css">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <p>Loading analytics...</p>
+    </div>
+
+    <div class="dashboard-layout" id="dashboardLayout" style="display: none;">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🐦</span>
+                    <span class="logo-text">BeakyBabe</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span>Overview</span></a>
+                <a href="links.html" class="nav-item"><span class="nav-icon">🔗</span><span>My Links</span></a>
+                <a href="appearance.html" class="nav-item"><span class="nav-icon">🎨</span><span>Appearance</span></a>
+                <a href="analytics.html" class="nav-item active"><span
+                        class="nav-icon">📈</span><span>Analytics</span></a>
+                <a href="store.html" class="nav-item"><span class="nav-icon">🛒</span><span>Store</span></a>
+                <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="plan-badge"><span class="badge-icon">⭐</span><span>Free Plan</span></div>
+                <a href="#" class="upgrade-btn">Upgrade to Pro</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+                    <div class="page-title">
+                        <h1>Analytics</h1>
+                        <p>Track your page performance</p>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="time-range-picker">
+                        <select id="timeRange" class="time-select">
+                            <option value="7">Last 7 days</option>
+                            <option value="30" selected>Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                        </select>
+                    </div>
+                    <div class="user-menu" id="userMenu">
+                        <div class="user-avatar" id="userAvatar"><span>?</span></div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-header">
+                                <span class="user-name" id="userName">Loading...</span>
+                                <span class="user-email" id="userEmail">...</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="settings.html" class="dropdown-item"><span>⚙️</span> Settings</a>
+                            <a href="#" class="dropdown-item" id="logoutBtn"><span>🚪</span> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Stats Overview -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👁️</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalViews">0</span>
+                            <span class="stat-label">Page Views</span>
+                        </div>
+                        <span class="stat-change positive" id="viewsChange">+0%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👆</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalClicks">0</span>
+                            <span class="stat-label">Link Clicks</span>
+                        </div>
+                        <span class="stat-change positive" id="clicksChange">+0%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="ctr">0%</span>
+                            <span class="stat-label">Click Rate</span>
+                        </div>
+                        <span class="stat-change neutral">—</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📧</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalSubscribers">0</span>
+                            <span class="stat-label">Subscribers</span>
+                        </div>
+                        <span class="stat-change positive" id="subsChange">+0%</span>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <!-- Views Chart -->
+                    <div class="chart-card large">
+                        <div class="card-header">
+                            <h3>📈 Page Views Over Time</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="viewsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Grid -->
+                <div class="analytics-grid">
+                    <!-- Top Links -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>🔥 Top Performing Links</h3>
+                        </div>
+                        <div class="top-links-list" id="topLinksList">
+                            <!-- Will be populated -->
+                        </div>
+                    </div>
+
+                    <!-- Traffic Sources -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>🌐 Traffic Sources</h3>
+                        </div>
+                        <div class="sources-list" id="sourcesList">
+                            <!-- Will be populated -->
+                        </div>
+                    </div>
+
+                    <!-- Device Breakdown -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>📱 Devices</h3>
+                        </div>
+                        <div class="devices-list" id="devicesList">
+                            <!-- Will be populated -->
+                        </div>
+                    </div>
+
+                    <!-- Location Map (placeholder) -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>🗺️ Top Locations</h3>
+                            <span class="pro-badge">PRO</span>
+                        </div>
+                        <div class="pro-locked">
+                            <div class="lock-icon">🔒</div>
+                            <p>Upgrade to Pro to see where your visitors are from</p>
+                            <a href="#" class="btn btn-primary btn-sm">Upgrade Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Insights (Pro feature) -->
+                <div class="insights-card">
+                    <div class="card-header">
+                        <h3>🤖 AI Insights</h3>
+                        <span class="pro-badge">PRO</span>
+                    </div>
+                    <div class="insights-content">
+                        <div class="insight-item locked">
+                            <span class="insight-icon">💡</span>
+                            <div class="insight-text">
+                                <p class="blur-text">Your link "Shop My Presets" converts 34% better than average.
+                                    Consider featuring it more prominently.</p>
+                            </div>
+                        </div>
+                        <div class="insight-item locked">
+                            <span class="insight-icon">📈</span>
+                            <div class="insight-text">
+                                <p class="blur-text">Traffic from TikTok peaks on Wednesdays at 8PM. Schedule your posts
+                                    accordingly.</p>
+                            </div>
+                        </div>
+                        <div class="insight-item locked">
+                            <span class="insight-icon">🎯</span>
+                            <div class="insight-text">
+                                <p class="blur-text">Mobile users spend 2x more time on your page. Consider optimizing
+                                    for mobile-first.</p>
+                            </div>
+                        </div>
+                        <div class="unlock-overlay">
+                            <p>Unlock AI-powered insights with Pro</p>
+                            <a href="#" class="btn btn-primary">Upgrade to Pro</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="config.js"></script>
+    <script src="db.js"></script>
+    <script>
+        let viewsChart = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const session = await Auth.requireAuth();
+            if (!session) return;
+
+            const user = await Auth.getUser();
+            const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').innerHTML = `<span>${userName.charAt(0).toUpperCase()}</span>`;
+
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('dashboardLayout').style.display = 'flex';
+
+            // Load analytics
+            await loadAnalytics();
+
+            // Event listeners
+            document.getElementById('timeRange').addEventListener('change', loadAnalytics);
+
+            document.getElementById('userMenu').addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('userDropdown').classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => {
+                document.getElementById('userDropdown').classList.remove('show');
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                await Auth.signOut();
+            });
+
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('mobile-open');
+            });
+        });
+
+        async function loadAnalytics() {
+            const days = parseInt(document.getElementById('timeRange').value);
+
+            // Load summary
+            const summary = await DB.getAnalyticsSummary(days);
+            document.getElementById('totalViews').textContent = formatNumber(summary.views);
+            document.getElementById('totalClicks').textContent = formatNumber(summary.clicks);
+            document.getElementById('totalSubscribers').textContent = formatNumber(summary.subscribers);
+
+            const ctr = summary.views > 0 ? ((summary.clicks / summary.views) * 100).toFixed(1) : 0;
+            document.getElementById('ctr').textContent = ctr + '%';
+
+            // Load views chart
+            const viewsData = await DB.getViewsByDay(days);
+            renderViewsChart(viewsData);
+
+            // Load top links
+            const topLinks = await DB.getTopLinks(days, 5);
+            renderTopLinks(topLinks);
+
+            // Load traffic sources
+            const sources = await DB.getTrafficSources(days);
+            renderSources(sources);
+
+            // Load device stats
+            const devices = await DB.getDeviceStats(days);
+            renderDevices(devices);
+        }
+
+        function renderViewsChart(data) {
+            const ctx = document.getElementById('viewsChart').getContext('2d');
+
+            if (viewsChart) {
+                viewsChart.destroy();
+            }
+
+            viewsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => formatDate(d.date)),
+                    datasets: [{
+                        label: 'Page Views',
+                        data: data.map(d => d.count),
+                        borderColor: '#a855f7',
+                        backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#a855f7'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.5)'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.5)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderTopLinks(links) {
+            const container = document.getElementById('topLinksList');
+
+            if (links.length === 0) {
+                container.innerHTML = '<p class="empty-text">No link clicks yet</p>';
+                return;
+            }
+
+            const maxClicks = Math.max(...links.map(l => l.total_clicks)) || 1;
+
+            container.innerHTML = links.map((link, index) => `
+                <div class="top-link-item">
+                    <span class="rank">#${index + 1}</span>
+                    <span class="link-icon">${link.icon || '🔗'}</span>
+                    <span class="link-title">${escapeHtml(link.title)}</span>
+                    <div class="link-bar-container">
+                        <div class="link-bar" style="width: ${(link.total_clicks / maxClicks) * 100}%"></div>
+                    </div>
+                    <span class="link-clicks">${link.total_clicks}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderSources(sources) {
+            const container = document.getElementById('sourcesList');
+
+            if (sources.length === 0) {
+                container.innerHTML = '<p class="empty-text">No traffic data yet</p>';
+                return;
+            }
+
+            const sourceIcons = {
+                instagram: '📸',
+                tiktok: '🎵',
+                twitter: '🐦',
+                youtube: '📺',
+                facebook: '👤',
+                linkedin: '💼',
+                direct: '🔗',
+                other: '🌐'
+            };
+
+            container.innerHTML = sources.slice(0, 5).map(source => `
+                <div class="source-item">
+                    <span class="source-icon">${sourceIcons[source.name] || '🌐'}</span>
+                    <span class="source-name">${capitalizeFirst(source.name)}</span>
+                    <div class="source-bar-container">
+                        <div class="source-bar" style="width: ${source.percent}%"></div>
+                    </div>
+                    <span class="source-percent">${source.percent}%</span>
+                </div>
+            `).join('');
+        }
+
+        function renderDevices(devices) {
+            const container = document.getElementById('devicesList');
+
+            const deviceIcons = {
+                mobile: '📱',
+                tablet: '📲',
+                desktop: '💻'
+            };
+
+            container.innerHTML = devices.map(device => `
+                <div class="device-item">
+                    <span class="device-icon">${deviceIcons[device.name] || '📱'}</span>
+                    <span class="device-name">${capitalizeFirst(device.name)}</span>
+                    <div class="device-bar-container">
+                        <div class="device-bar" style="width: ${device.percent}%"></div>
+                    </div>
+                    <span class="device-percent">${device.percent}%</span>
+                </div>
+            `).join('');
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toString();
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>

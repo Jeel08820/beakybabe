@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appearance | BeakyBabe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="appearance.css">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <p>Loading appearance settings...</p>
+    </div>
+
+    <div class="dashboard-layout" id="dashboardLayout" style="display: none;">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🐦</span>
+                    <span class="logo-text">BeakyBabe</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span>Overview</span></a>
+                <a href="links.html" class="nav-item"><span class="nav-icon">🔗</span><span>My Links</span></a>
+                <a href="appearance.html" class="nav-item active"><span
+                        class="nav-icon">🎨</span><span>Appearance</span></a>
+                <a href="analytics.html" class="nav-item"><span class="nav-icon">📈</span><span>Analytics</span></a>
+                <a href="store.html" class="nav-item"><span class="nav-icon">🛒</span><span>Store</span></a>
+                <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="plan-badge"><span class="badge-icon">⭐</span><span>Free Plan</span></div>
+                <a href="#" class="upgrade-btn">Upgrade to Pro</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+                    <div class="page-title">
+                        <h1>Appearance</h1>
+                        <p>Customize your page look and feel</p>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="btn btn-primary" id="saveBtn">
+                        <span>💾</span> Save Changes
+                    </button>
+                    <div class="user-menu" id="userMenu">
+                        <div class="user-avatar" id="userAvatar"><span>?</span></div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-header">
+                                <span class="user-name" id="userName">Loading...</span>
+                                <span class="user-email" id="userEmail">...</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="settings.html" class="dropdown-item"><span>⚙️</span> Settings</a>
+                            <a href="#" class="dropdown-item" id="logoutBtn"><span>🚪</span> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="appearance-layout">
+                <!-- Settings Panel -->
+                <div class="settings-panel">
+                    <!-- Theme Selection -->
+                    <div class="settings-section">
+                        <h3>🎨 Theme</h3>
+                        <div class="theme-grid">
+                            <button class="theme-option" data-theme="dark">
+                                <div class="theme-preview dark-theme"></div>
+                                <span>Dark</span>
+                            </button>
+                            <button class="theme-option" data-theme="light">
+                                <div class="theme-preview light-theme"></div>
+                                <span>Light</span>
+                            </button>
+                            <button class="theme-option" data-theme="gradient">
+                                <div class="theme-preview gradient-theme"></div>
+                                <span>Gradient</span>
+                            </button>
+                            <button class="theme-option pro-only" data-theme="neon">
+                                <div class="theme-preview neon-theme"></div>
+                                <span>Neon ⭐</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Colors -->
+                    <div class="settings-section">
+                        <h3>🌈 Colors</h3>
+                        <div class="color-options">
+                            <div class="color-option">
+                                <label>Primary Color</label>
+                                <div class="color-picker-wrap">
+                                    <input type="color" id="primaryColor" value="#a855f7">
+                                    <span class="color-value" id="primaryValue">#a855f7</span>
+                                </div>
+                            </div>
+                            <div class="color-option">
+                                <label>Secondary Color</label>
+                                <div class="color-picker-wrap">
+                                    <input type="color" id="secondaryColor" value="#ec4899">
+                                    <span class="color-value" id="secondaryValue">#ec4899</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preset-colors">
+                            <span class="preset-label">Presets:</span>
+                            <button class="preset-btn" data-primary="#a855f7" data-secondary="#ec4899"
+                                style="background: linear-gradient(135deg, #a855f7, #ec4899)"></button>
+                            <button class="preset-btn" data-primary="#06b6d4" data-secondary="#3b82f6"
+                                style="background: linear-gradient(135deg, #06b6d4, #3b82f6)"></button>
+                            <button class="preset-btn" data-primary="#10b981" data-secondary="#06b6d4"
+                                style="background: linear-gradient(135deg, #10b981, #06b6d4)"></button>
+                            <button class="preset-btn" data-primary="#f97316" data-secondary="#ef4444"
+                                style="background: linear-gradient(135deg, #f97316, #ef4444)"></button>
+                            <button class="preset-btn" data-primary="#ec4899" data-secondary="#8b5cf6"
+                                style="background: linear-gradient(135deg, #ec4899, #8b5cf6)"></button>
+                        </div>
+                    </div>
+
+                    <!-- Typography -->
+                    <div class="settings-section">
+                        <h3>✏️ Typography</h3>
+                        <div class="font-options">
+                            <label>Font Family</label>
+                            <div class="font-grid">
+                                <button class="font-option" data-font="Inter" style="font-family: Inter">
+                                    <span class="font-sample">Aa</span>
+                                    <span class="font-name">Inter</span>
+                                </button>
+                                <button class="font-option" data-font="Space Grotesk"
+                                    style="font-family: 'Space Grotesk'">
+                                    <span class="font-sample">Aa</span>
+                                    <span class="font-name">Space Grotesk</span>
+                                </button>
+                                <button class="font-option" data-font="Poppins" style="font-family: Poppins">
+                                    <span class="font-sample">Aa</span>
+                                    <span class="font-name">Poppins</span>
+                                </button>
+                                <button class="font-option" data-font="Outfit" style="font-family: Outfit">
+                                    <span class="font-sample">Aa</span>
+                                    <span class="font-name">Outfit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Button Style -->
+                    <div class="settings-section">
+                        <h3>🔘 Button Style</h3>
+                        <div class="button-styles">
+                            <button class="style-option" data-style="rounded">
+                                <div class="btn-preview rounded">Link</div>
+                                <span>Rounded</span>
+                            </button>
+                            <button class="style-option" data-style="pill">
+                                <div class="btn-preview pill">Link</div>
+                                <span>Pill</span>
+                            </button>
+                            <button class="style-option" data-style="square">
+                                <div class="btn-preview square">Link</div>
+                                <span>Square</span>
+                            </button>
+                            <button class="style-option" data-style="outline">
+                                <div class="btn-preview outline">Link</div>
+                                <span>Outline</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI Theme Generator -->
+                    <div class="settings-section ai-section">
+                        <h3>🤖 AI Theme Generator</h3>
+                        <p>Let AI create a unique theme based on your brand</p>
+                        <div class="ai-input-group">
+                            <input type="text" id="aiPrompt" class="form-input"
+                                placeholder="e.g., 'Modern tech startup vibe' or 'Cozy coffee shop aesthetic'">
+                            <button class="btn btn-primary" id="generateTheme">
+                                ✨ Generate
+                            </button>
+                        </div>
+                        <p class="pro-hint">⭐ Pro feature - 5 free generations per month</p>
+                    </div>
+                </div>
+
+                <!-- Live Preview -->
+                <div class="preview-panel">
+                    <div class="preview-header">
+                        <h3>📱 Live Preview</h3>
+                        <div class="device-toggle">
+                            <button class="device-btn active" data-device="mobile">📱</button>
+                            <button class="device-btn" data-device="desktop">💻</button>
+                        </div>
+                    </div>
+                    <div class="preview-container">
+                        <div class="phone-frame" id="previewFrame">
+                            <div class="phone-notch"></div>
+                            <div class="preview-page" id="previewPage">
+                                <div class="preview-header-section">
+                                    <div class="preview-avatar" id="previewAvatar">
+                                        <span>J</span>
+                                    </div>
+                                    <h2 class="preview-name" id="previewName">@username</h2>
+                                    <p class="preview-bio">✨ Creator & Artist | Building cool things</p>
+                                </div>
+                                <div class="preview-links">
+                                    <a href="#" class="preview-link">
+                                        <span>📺</span> Latest YouTube Video
+                                    </a>
+                                    <a href="#" class="preview-link">
+                                        <span>📱</span> Follow on TikTok
+                                    </a>
+                                    <a href="#" class="preview-link">
+                                        <span>🛒</span> Shop My Products
+                                    </a>
+                                    <a href="#" class="preview-link">
+                                        <span>💌</span> Join Newsletter
+                                    </a>
+                                </div>
+                                <div class="preview-footer">
+                                    <span>Powered by 🐦 BeakyBabe</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="db.js"></script>
+    <script>
+        let currentSettings = {
+            theme: 'dark',
+            primary_color: '#a855f7',
+            secondary_color: '#ec4899',
+            font_family: 'Inter',
+            button_style: 'rounded'
+        };
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const session = await Auth.requireAuth();
+            if (!session) return;
+
+            const user = await Auth.getUser();
+            const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').innerHTML = `<span>${userName.charAt(0).toUpperCase()}</span>`;
+            document.getElementById('previewName').textContent = '@' + userName.toLowerCase().replace(/\s+/g, '');
+            document.getElementById('previewAvatar').innerHTML = `<span>${userName.charAt(0).toUpperCase()}</span>`;
+
+            // Load profile settings
+            const { data: profile } = await DB.getProfile();
+            if (profile) {
+                currentSettings = {
+                    theme: profile.theme || 'dark',
+                    primary_color: profile.primary_color || '#a855f7',
+                    secondary_color: profile.secondary_color || '#ec4899',
+                    font_family: profile.font_family || 'Inter',
+                    button_style: profile.button_style || 'rounded'
+                };
+                applySettings();
+            }
+
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('dashboardLayout').style.display = 'flex';
+
+            setupEventListeners();
+        });
+
+        function applySettings() {
+            // Apply theme selection
+            document.querySelectorAll('.theme-option').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.theme === currentSettings.theme);
+            });
+
+            // Apply colors
+            document.getElementById('primaryColor').value = currentSettings.primary_color;
+            document.getElementById('secondaryColor').value = currentSettings.secondary_color;
+            document.getElementById('primaryValue').textContent = currentSettings.primary_color;
+            document.getElementById('secondaryValue').textContent = currentSettings.secondary_color;
+
+            // Apply font
+            document.querySelectorAll('.font-option').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.font === currentSettings.font_family);
+            });
+
+            // Apply button style
+            document.querySelectorAll('.style-option').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.style === currentSettings.button_style);
+            });
+
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const preview = document.getElementById('previewPage');
+
+            // Apply theme
+            preview.className = 'preview-page theme-' + currentSettings.theme;
+
+            // Apply colors
+            preview.style.setProperty('--preview-primary', currentSettings.primary_color);
+            preview.style.setProperty('--preview-secondary', currentSettings.secondary_color);
+
+            // Apply font
+            preview.style.fontFamily = currentSettings.font_family + ', sans-serif';
+
+            // Apply button style
+            preview.querySelectorAll('.preview-link').forEach(link => {
+                link.className = 'preview-link btn-style-' + currentSettings.button_style;
+            });
+        }
+
+        function setupEventListeners() {
+            // Theme selection
+            document.querySelectorAll('.theme-option').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (btn.classList.contains('pro-only')) {
+                        alert('This theme is available on Pro plan. Upgrade to unlock!');
+                        return;
+                    }
+                    currentSettings.theme = btn.dataset.theme;
+                    applySettings();
+                });
+            });
+
+            // Color pickers
+            document.getElementById('primaryColor').addEventListener('input', (e) => {
+                currentSettings.primary_color = e.target.value;
+                document.getElementById('primaryValue').textContent = e.target.value;
+                updatePreview();
+            });
+
+            document.getElementById('secondaryColor').addEventListener('input', (e) => {
+                currentSettings.secondary_color = e.target.value;
+                document.getElementById('secondaryValue').textContent = e.target.value;
+                updatePreview();
+            });
+
+            // Color presets
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentSettings.primary_color = btn.dataset.primary;
+                    currentSettings.secondary_color = btn.dataset.secondary;
+                    document.getElementById('primaryColor').value = btn.dataset.primary;
+                    document.getElementById('secondaryColor').value = btn.dataset.secondary;
+                    document.getElementById('primaryValue').textContent = btn.dataset.primary;
+                    document.getElementById('secondaryValue').textContent = btn.dataset.secondary;
+                    updatePreview();
+                });
+            });
+
+            // Font selection
+            document.querySelectorAll('.font-option').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentSettings.font_family = btn.dataset.font;
+                    applySettings();
+                });
+            });
+
+            // Button style
+            document.querySelectorAll('.style-option').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentSettings.button_style = btn.dataset.style;
+                    applySettings();
+                });
+            });
+
+            // Device toggle
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById('previewFrame').classList.toggle('desktop-view', btn.dataset.device === 'desktop');
+                });
+            });
+
+            // Save button
+            document.getElementById('saveBtn').addEventListener('click', async () => {
+                const btn = document.getElementById('saveBtn');
+                btn.disabled = true;
+                btn.innerHTML = '<div class="spinner"></div> Saving...';
+
+                const { error } = await DB.updateProfile(currentSettings);
+
+                if (error) {
+                    alert('Error saving: ' + error.message);
+                } else {
+                    btn.innerHTML = '✓ Saved!';
+                    setTimeout(() => {
+                        btn.innerHTML = '<span>💾</span> Save Changes';
+                    }, 2000);
+                }
+                btn.disabled = false;
+            });
+
+            // AI Theme Generator
+            document.getElementById('generateTheme').addEventListener('click', () => {
+                alert('AI Theme Generator is a Pro feature. Upgrade to unlock!');
+            });
+
+            // User menu
+            document.getElementById('userMenu').addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('userDropdown').classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => {
+                document.getElementById('userDropdown').classList.remove('show');
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                await Auth.signOut();
+            });
+
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('mobile-open');
+            });
+        }
+    </script>
+</body>
+
+</html>

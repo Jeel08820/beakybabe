@@ -1,0 +1,316 @@
+/* ========================================
+   BeakyBabe - Analytics Page Styles
+   ======================================== */
+
+/* Time Range Picker */
+.time-range-picker {
+    margin-right: 16px;
+}
+
+.time-select {
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.time-select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.time-select option {
+    background: #1a1a2e;
+}
+
+/* Charts Row */
+.charts-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.chart-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.chart-card .card-header {
+    margin-bottom: 20px;
+}
+
+.chart-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.chart-container {
+    height: 300px;
+    position: relative;
+}
+
+/* Analytics Grid */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.analytics-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.analytics-card .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.analytics-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.pro-badge {
+    padding: 4px 10px;
+    background: var(--gradient-primary);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Top Links List */
+.top-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.top-link-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.rank {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    width: 32px;
+}
+
+.link-icon {
+    font-size: 20px;
+}
+
+.link-title {
+    flex: 1;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.link-bar-container {
+    width: 100px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.link-bar {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: 3px;
+}
+
+.link-clicks {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 50px;
+    text-align: right;
+}
+
+/* Sources & Devices List */
+.sources-list,
+.devices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.source-item,
+.device-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.source-icon,
+.device-icon {
+    font-size: 20px;
+}
+
+.source-name,
+.device-name {
+    flex: 1;
+    font-size: 14px;
+}
+
+.source-bar-container,
+.device-bar-container {
+    width: 80px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.source-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #06b6d4, #a855f7);
+    border-radius: 3px;
+}
+
+.device-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ec4899, #f97316);
+    border-radius: 3px;
+}
+
+.source-percent,
+.device-percent {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 40px;
+    text-align: right;
+}
+
+/* Pro Locked State */
+.pro-locked {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.lock-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.pro-locked p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.btn-sm {
+    padding: 10px 20px;
+    font-size: 13px;
+}
+
+/* AI Insights Card */
+.insights-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.insights-card .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.insights-content {
+    position: relative;
+}
+
+.insight-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.insight-item.locked {
+    filter: blur(3px);
+    pointer-events: none;
+}
+
+.insight-icon {
+    font-size: 24px;
+}
+
+.insight-text p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.blur-text {
+    filter: blur(4px);
+}
+
+.unlock-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 10, 15, 0.7);
+    backdrop-filter: blur(2px);
+}
+
+.unlock-overlay p {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+/* Empty State */
+.empty-text {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    padding: 40px 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        height: 250px;
+    }
+
+    .link-bar-container,
+    .source-bar-container,
+    .device-bar-container {
+        display: none;
+    }
+}

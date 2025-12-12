@@ -1,0 +1,23 @@
+{
+  "name": "beakybabe",
+  "version": "1.0.0",
+  "description": "BeakyBabe - Premium AI-Powered Link-in-Bio Platform",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve -l 3000",
+    "start": "npx serve -l 3000",
+    "build": "echo 'Static site - no build required'",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod"
+  },
+  "keywords": [
+    "link-in-bio",
+    "creator-tools",
+    "saas"
+  ],
+  "author": "BeakyBabe Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

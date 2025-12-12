@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store | BeakyBabe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="store.css">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <p>Loading store...</p>
+    </div>
+
+    <div class="dashboard-layout" id="dashboardLayout" style="display: none;">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🐦</span>
+                    <span class="logo-text">BeakyBabe</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span>Overview</span></a>
+                <a href="links.html" class="nav-item"><span class="nav-icon">🔗</span><span>My Links</span></a>
+                <a href="appearance.html" class="nav-item"><span class="nav-icon">🎨</span><span>Appearance</span></a>
+                <a href="analytics.html" class="nav-item"><span class="nav-icon">📈</span><span>Analytics</span></a>
+                <a href="store.html" class="nav-item active"><span class="nav-icon">🛒</span><span>Store</span></a>
+                <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="plan-badge"><span class="badge-icon">⭐</span><span>Free Plan</span></div>
+                <a href="#" class="upgrade-btn">Upgrade to Pro</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+                    <div class="page-title">
+                        <h1>Store</h1>
+                        <p>Sell digital products and accept payments</p>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="btn btn-primary" id="addProductBtn">
+                        <span>➕</span> Add Product
+                    </button>
+                    <div class="user-menu" id="userMenu">
+                        <div class="user-avatar" id="userAvatar"><span>?</span></div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-header">
+                                <span class="user-name" id="userName">Loading...</span>
+                                <span class="user-email" id="userEmail">...</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="settings.html" class="dropdown-item"><span>⚙️</span> Settings</a>
+                            <a href="#" class="dropdown-item" id="logoutBtn"><span>🚪</span> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Revenue Stats -->
+                <div class="stats-grid store-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalRevenue">$0</span>
+                            <span class="stat-label">Total Revenue</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalOrders">0</span>
+                            <span class="stat-label">Total Orders</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="avgOrder">$0</span>
+                            <span class="stat-label">Avg. Order Value</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🛍️</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="productCount">0</span>
+                            <span class="stat-label">Products</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Store Tabs -->
+                <div class="store-tabs">
+                    <button class="tab-btn active" data-tab="products">🛍️ Products</button>
+                    <button class="tab-btn" data-tab="orders">📦 Orders</button>
+                    <button class="tab-btn" data-tab="payouts">💳 Payouts</button>
+                </div>
+
+                <!-- Products Tab -->
+                <div class="tab-content active" id="products-tab">
+                    <div class="products-grid" id="productsGrid">
+                        <!-- Products will be loaded here -->
+                    </div>
+                    <div class="empty-state" id="emptyProducts" style="display: none;">
+                        <div class="empty-icon">🛍️</div>
+                        <h3>No products yet</h3>
+                        <p>Add your first digital product to start selling!</p>
+                        <button class="btn btn-primary" id="addFirstProduct">Add Product</button>
+                    </div>
+                </div>
+
+                <!-- Orders Tab -->
+                <div class="tab-content" id="orders-tab">
+                    <div class="orders-table">
+                        <div class="table-header">
+                            <span class="col-product">Product</span>
+                            <span class="col-customer">Customer</span>
+                            <span class="col-amount">Amount</span>
+                            <span class="col-status">Status</span>
+                            <span class="col-date">Date</span>
+                        </div>
+                        <div class="table-body" id="ordersTable">
+                            <!-- Orders will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="empty-state" id="emptyOrders" style="display: none;">
+                        <div class="empty-icon">📦</div>
+                        <h3>No orders yet</h3>
+                        <p>Your orders will appear here once you make your first sale!</p>
+                    </div>
+                </div>
+
+                <!-- Payouts Tab -->
+                <div class="tab-content" id="payouts-tab">
+                    <div class="payout-setup">
+                        <div class="setup-card">
+                            <span class="setup-icon">🏦</span>
+                            <h3>Connect Payment Account</h3>
+                            <p>Connect Stripe to receive payouts from your sales</p>
+                            <button class="btn btn-primary">Connect Stripe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="modal-overlay" id="productModal" style="display: none;">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Product</h3>
+                <button class="modal-close" id="closeModal">✕</button>
+            </div>
+            <form id="productForm" class="modal-body">
+                <input type="hidden" id="productId">
+
+                <div class="product-type-selector">
+                    <button type="button" class="type-btn active" data-type="digital">
+                        <span class="type-icon">📁</span>
+                        <span class="type-name">Digital Download</span>
+                        <span class="type-desc">PDFs, presets, templates</span>
+                    </button>
+                    <button type="button" class="type-btn" data-type="tip">
+                        <span class="type-icon">☕</span>
+                        <span class="type-name">Tip Jar</span>
+                        <span class="type-desc">Accept donations</span>
+                    </button>
+                    <button type="button" class="type-btn" data-type="membership">
+                        <span class="type-icon">⭐</span>
+                        <span class="type-name">Membership</span>
+                        <span class="type-desc">Recurring access</span>
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label for="productTitle">Product Name</label>
+                    <input type="text" id="productTitle" class="form-input" placeholder="e.g., Lightroom Preset Pack"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" class="form-input textarea" rows="3"
+                        placeholder="Describe what buyers will get..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productPrice">Price ($)</label>
+                        <input type="number" id="productPrice" class="form-input" min="0" step="0.01"
+                            placeholder="29.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">Cover Image URL</label>
+                        <input type="url" id="productImage" class="form-input" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="form-group" id="fileUploadGroup">
+                    <label>File</label>
+                    <div class="file-upload-area">
+                        <span class="upload-icon">📁</span>
+                        <p>Drag & drop your file here, or click to browse</p>
+                        <p class="file-hint">Max 100MB. PDF, ZIP, or any file type.</p>
+                        <input type="file" id="productFile" class="file-input">
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="cancelProduct">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveProduct">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="db.js"></script>
+    <script>
+        let currentProducts = [];
+        let currentProductType = 'digital';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const session = await Auth.requireAuth();
+            if (!session) return;
+
+            const user = await Auth.getUser();
+            const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').innerHTML = `<span>${userName.charAt(0).toUpperCase()}</span>`;
+
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('dashboardLayout').style.display = 'flex';
+
+            await loadProducts();
+            await loadStats();
+            await loadOrders();
+
+            setupEventListeners();
+        });
+
+        async function loadProducts() {
+            const { data: products, error } = await DB.getProducts();
+            currentProducts = products || [];
+
+            document.getElementById('productCount').textContent = currentProducts.length;
+
+            const grid = document.getElementById('productsGrid');
+            const empty = document.getElementById('emptyProducts');
+
+            if (currentProducts.length === 0) {
+                grid.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            grid.innerHTML = currentProducts.map(product => `
+                <div class="product-card" data-id="${product.id}">
+                    <div class="product-image" style="background-image: url('${product.image_url || ''}')">
+                        ${!product.image_url ? '<span class="no-image">📁</span>' : ''}
+                    </div>
+                    <div class="product-info">
+                        <h4>${escapeHtml(product.title)}</h4>
+                        <p class="product-price">$${parseFloat(product.price).toFixed(2)}</p>
+                        <p class="product-stats">${product.total_sales || 0} sales • $${parseFloat(product.total_revenue || 0).toFixed(2)}</p>
+                    </div>
+                    <div class="product-actions">
+                        <label class="toggle-switch small">
+                            <input type="checkbox" ${product.is_active ? 'checked' : ''} onchange="toggleProduct('${product.id}', this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <button class="icon-btn-sm" onclick="editProduct('${product.id}')" title="Edit">✏️</button>
+                        <button class="icon-btn-sm delete" onclick="deleteProduct('${product.id}')" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function loadStats() {
+            const stats = await DB.getRevenueStats(30);
+            document.getElementById('totalRevenue').textContent = '$' + stats.totalRevenue.toFixed(2);
+            document.getElementById('totalOrders').textContent = stats.orderCount;
+            document.getElementById('avgOrder').textContent = '$' + stats.avgOrderValue.toFixed(2);
+        }
+
+        async function loadOrders() {
+            const { data: orders } = await DB.getOrders(20);
+            const table = document.getElementById('ordersTable');
+            const empty = document.getElementById('emptyOrders');
+
+            if (!orders || orders.length === 0) {
+                table.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            table.innerHTML = orders.map(order => `
+                <div class="table-row">
+                    <span class="col-product">${escapeHtml(order.products?.title || 'Unknown')}</span>
+                    <span class="col-customer">${escapeHtml(order.buyer_email)}</span>
+                    <span class="col-amount">$${parseFloat(order.amount).toFixed(2)}</span>
+                    <span class="col-status"><span class="status-badge ${order.payment_status}">${order.payment_status}</span></span>
+                    <span class="col-date">${formatDate(order.created_at)}</span>
+                </div>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // Tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.tab + '-tab').classList.add('active');
+                });
+            });
+
+            // Add Product buttons
+            document.getElementById('addProductBtn').addEventListener('click', openAddModal);
+            document.getElementById('addFirstProduct')?.addEventListener('click', openAddModal);
+
+            // Modal
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            document.getElementById('cancelProduct').addEventListener('click', closeModal);
+            document.getElementById('productModal').addEventListener('click', (e) => {
+                if (e.target.id === 'productModal') closeModal();
+            });
+
+            // Product type selector
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentProductType = btn.dataset.type;
+
+                    // Show/hide file upload based on type
+                    document.getElementById('fileUploadGroup').style.display =
+                        currentProductType === 'digital' ? 'block' : 'none';
+                });
+            });
+
+            // Product form
+            document.getElementById('productForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const btn = document.getElementById('saveProduct');
+                btn.disabled = true;
+                btn.textContent = 'Saving...';
+
+                const product = {
+                    title: document.getElementById('productTitle').value,
+                    description: document.getElementById('productDescription').value,
+                    price: parseFloat(document.getElementById('productPrice').value),
+                    image_url: document.getElementById('productImage').value,
+                    type: currentProductType
+                };
+
+                const productId = document.getElementById('productId').value;
+                let error;
+
+                if (productId) {
+                    ({ error } = await DB.updateProduct(productId, product));
+                } else {
+                    ({ error } = await DB.createProduct(product));
+                }
+
+                if (error) {
+                    alert('Error saving product: ' + error.message);
+                } else {
+                    closeModal();
+                    await loadProducts();
+                }
+
+                btn.disabled = false;
+                btn.textContent = 'Save Product';
+            });
+
+            // User menu
+            document.getElementById('userMenu').addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('userDropdown').classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => {
+                document.getElementById('userDropdown').classList.remove('show');
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                await Auth.signOut();
+            });
+
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('mobile-open');
+            });
+        }
+
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = 'Add Product';
+            document.getElementById('productId').value = '';
+            document.getElementById('productForm').reset();
+            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.type-btn[data-type="digital"]').classList.add('active');
+            currentProductType = 'digital';
+            document.getElementById('fileUploadGroup').style.display = 'block';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function editProduct(id) {
+            const product = currentProducts.find(p => p.id === id);
+            if (!product) return;
+
+            document.getElementById('modalTitle').textContent = 'Edit Product';
+            document.getElementById('productId').value = product.id;
+            document.getElementById('productTitle').value = product.title;
+            document.getElementById('productDescription').value = product.description || '';
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productImage').value = product.image_url || '';
+
+            currentProductType = product.type || 'digital';
+            document.querySelectorAll('.type-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.type === currentProductType);
+            });
+            document.getElementById('fileUploadGroup').style.display =
+                currentProductType === 'digital' ? 'block' : 'none';
+
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        async function toggleProduct(id, isActive) {
+            await DB.updateProduct(id, { is_active: isActive });
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm('Are you sure you want to delete this product?')) return;
+
+            const { error } = await DB.deleteProduct(id);
+            if (error) {
+                alert('Error deleting product: ' + error.message);
+                return;
+            }
+
+            await loadProducts();
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>

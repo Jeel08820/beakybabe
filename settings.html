@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | BeakyBabe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <p>Loading settings...</p>
+    </div>
+
+    <div class="dashboard-layout" id="dashboardLayout" style="display: none;">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🐦</span>
+                    <span class="logo-text">BeakyBabe</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span>Overview</span></a>
+                <a href="links.html" class="nav-item"><span class="nav-icon">🔗</span><span>My Links</span></a>
+                <a href="appearance.html" class="nav-item"><span class="nav-icon">🎨</span><span>Appearance</span></a>
+                <a href="analytics.html" class="nav-item"><span class="nav-icon">📈</span><span>Analytics</span></a>
+                <a href="store.html" class="nav-item"><span class="nav-icon">🛒</span><span>Store</span></a>
+                <a href="settings.html" class="nav-item active"><span
+                        class="nav-icon">⚙️</span><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="plan-badge"><span class="badge-icon">⭐</span><span id="planBadge">Free Plan</span></div>
+                <a href="#" class="upgrade-btn">Upgrade to Pro</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+                    <div class="page-title">
+                        <h1>Settings</h1>
+                        <p>Manage your account and preferences</p>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-menu" id="userMenu">
+                        <div class="user-avatar" id="userAvatar"><span>?</span></div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-header">
+                                <span class="user-name" id="userName">Loading...</span>
+                                <span class="user-email" id="userEmail">...</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="logoutBtn"><span>🚪</span> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="settings-layout">
+                <!-- Settings Navigation -->
+                <nav class="settings-nav">
+                    <a href="#profile" class="settings-nav-item active" data-section="profile">
+                        <span>👤</span> Profile
+                    </a>
+                    <a href="#account" class="settings-nav-item" data-section="account">
+                        <span>🔐</span> Account
+                    </a>
+                    <a href="#notifications" class="settings-nav-item" data-section="notifications">
+                        <span>🔔</span> Notifications
+                    </a>
+                    <a href="#billing" class="settings-nav-item" data-section="billing">
+                        <span>💳</span> Billing
+                    </a>
+                    <a href="#domain" class="settings-nav-item" data-section="domain">
+                        <span>🌐</span> Custom Domain
+                    </a>
+                </nav>
+
+                <!-- Settings Content -->
+                <div class="settings-content">
+                    <!-- Profile Section -->
+                    <section class="settings-section active" id="profile">
+                        <div class="section-header">
+                            <h2>Profile Settings</h2>
+                            <p>This information will be displayed on your public page</p>
+                        </div>
+
+                        <form id="profileForm" class="settings-form">
+                            <div class="avatar-upload">
+                                <div class="current-avatar" id="currentAvatar">
+                                    <span>?</span>
+                                </div>
+                                <div class="avatar-actions">
+                                    <button type="button" class="btn btn-outline">Upload Photo</button>
+                                    <p>JPG, PNG or GIF. Max 2MB.</p>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName" class="form-input" placeholder="Your name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <div class="input-with-prefix">
+                                        <span class="input-prefix">beakybabe.bio/</span>
+                                        <input type="text" id="username" class="form-input" placeholder="username">
+                                    </div>
+                                    <span class="input-hint" id="usernameHint"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" class="form-input textarea" rows="3"
+                                    placeholder="Tell visitors about yourself..." maxlength="160"></textarea>
+                                <span class="char-count"><span id="bioCount">0</span>/160</span>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <input type="text" id="location" class="form-input"
+                                        placeholder="e.g., Los Angeles, CA">
+                                </div>
+                                <div class="form-group">
+                                    <label for="website">Website</label>
+                                    <input type="url" id="website" class="form-input"
+                                        placeholder="https://yoursite.com">
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" id="saveProfile">Save Changes</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- Account Section -->
+                    <section class="settings-section" id="account">
+                        <div class="section-header">
+                            <h2>Account Settings</h2>
+                            <p>Manage your account security and email</p>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="card-info">
+                                <h4>Email Address</h4>
+                                <p id="accountEmail">Loading...</p>
+                            </div>
+                            <button class="btn btn-outline btn-sm">Change Email</button>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="card-info">
+                                <h4>Password</h4>
+                                <p>Last changed: Never</p>
+                            </div>
+                            <button class="btn btn-outline btn-sm" id="changePasswordBtn">Change Password</button>
+                        </div>
+
+                        <div class="settings-card danger">
+                            <div class="card-info">
+                                <h4>Delete Account</h4>
+                                <p>Permanently delete your account and all data</p>
+                            </div>
+                            <button class="btn btn-danger btn-sm">Delete Account</button>
+                        </div>
+                    </section>
+
+                    <!-- Notifications Section -->
+                    <section class="settings-section" id="notifications">
+                        <div class="section-header">
+                            <h2>Notification Preferences</h2>
+                            <p>Choose what updates you want to receive</p>
+                        </div>
+
+                        <div class="notification-options">
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <h4>Email Notifications</h4>
+                                    <p>Get notified about new link clicks and analytics</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="emailNotifications" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <h4>Weekly Report</h4>
+                                    <p>Receive a weekly summary of your page performance</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="weeklyReport" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <h4>Marketing Emails</h4>
+                                    <p>Tips, product updates, and promotional offers</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="marketingEmails">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Billing Section -->
+                    <section class="settings-section" id="billing">
+                        <div class="section-header">
+                            <h2>Billing & Subscription</h2>
+                            <p>Manage your subscription and payment methods</p>
+                        </div>
+
+                        <div class="current-plan">
+                            <div class="plan-info">
+                                <span class="plan-icon">⭐</span>
+                                <div>
+                                    <h3 id="currentPlan">Free Plan</h3>
+                                    <p>Basic features with limited analytics</p>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-primary">Upgrade to Pro</a>
+                        </div>
+
+                        <div class="plan-comparison">
+                            <h4>Compare Plans</h4>
+                            <div class="comparison-grid">
+                                <div class="comparison-item">
+                                    <span class="feature">Unlimited Links</span>
+                                    <span class="free">5 links</span>
+                                    <span class="pro">✓</span>
+                                </div>
+                                <div class="comparison-item">
+                                    <span class="feature">AI Brand Generator</span>
+                                    <span class="free">—</span>
+                                    <span class="pro">✓</span>
+                                </div>
+                                <div class="comparison-item">
+                                    <span class="feature">Advanced Analytics</span>
+                                    <span class="free">—</span>
+                                    <span class="pro">✓</span>
+                                </div>
+                                <div class="comparison-item">
+                                    <span class="feature">Custom Domain</span>
+                                    <span class="free">—</span>
+                                    <span class="pro">✓</span>
+                                </div>
+                                <div class="comparison-item">
+                                    <span class="feature">Remove Branding</span>
+                                    <span class="free">—</span>
+                                    <span class="pro">✓</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Custom Domain Section -->
+                    <section class="settings-section" id="domain">
+                        <div class="section-header">
+                            <h2>Custom Domain</h2>
+                            <p>Use your own domain for your BeakyBabe page</p>
+                        </div>
+
+                        <div class="pro-feature-lock">
+                            <div class="lock-content">
+                                <span class="lock-icon">🔒</span>
+                                <h3>Pro Feature</h3>
+                                <p>Custom domains are available on Pro and Creator+ plans</p>
+                                <a href="#" class="btn btn-primary">Upgrade to Unlock</a>
+                            </div>
+                        </div>
+
+                        <div class="domain-help">
+                            <h4>How it works</h4>
+                            <ol>
+                                <li>Purchase a domain from a registrar (Namecheap, GoDaddy, etc.)</li>
+                                <li>Add your domain in BeakyBabe settings</li>
+                                <li>Update your DNS settings with our provided records</li>
+                                <li>Wait for DNS propagation (usually 24-48 hours)</li>
+                                <li>Your custom domain is live!</li>
+                            </ol>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="db.js"></script>
+    <script>
+        let currentProfile = {};
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const session = await Auth.requireAuth();
+            if (!session) return;
+
+            const user = await Auth.getUser();
+            const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').innerHTML = `<span>${userName.charAt(0).toUpperCase()}</span>`;
+            document.getElementById('accountEmail').textContent = user.email;
+
+            // Load profile
+            const { data: profile } = await DB.getProfile();
+            if (profile) {
+                currentProfile = profile;
+                populateForm(profile);
+            }
+
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('dashboardLayout').style.display = 'flex';
+
+            setupEventListeners();
+        });
+
+        function populateForm(profile) {
+            document.getElementById('fullName').value = profile.full_name || '';
+            document.getElementById('username').value = profile.username || '';
+            document.getElementById('bio').value = profile.bio || '';
+            document.getElementById('location').value = profile.location || '';
+            document.getElementById('website').value = profile.website || '';
+
+            document.getElementById('bioCount').textContent = (profile.bio || '').length;
+
+            if (profile.full_name) {
+                document.getElementById('currentAvatar').innerHTML = `<span>${profile.full_name.charAt(0).toUpperCase()}</span>`;
+            }
+
+            document.getElementById('emailNotifications').checked = profile.email_notifications !== false;
+            document.getElementById('marketingEmails').checked = profile.marketing_emails === true;
+        }
+
+        function setupEventListeners() {
+            // Settings Navigation
+            document.querySelectorAll('.settings-nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const section = item.dataset.section;
+
+                    document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+                    document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+
+                    item.classList.add('active');
+                    document.getElementById(section).classList.add('active');
+                });
+            });
+
+            // Bio character count
+            document.getElementById('bio').addEventListener('input', (e) => {
+                document.getElementById('bioCount').textContent = e.target.value.length;
+            });
+
+            // Username validation
+            let usernameTimeout;
+            document.getElementById('username').addEventListener('input', async (e) => {
+                clearTimeout(usernameTimeout);
+                const username = e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, '');
+                e.target.value = username;
+
+                if (username.length < 3) {
+                    document.getElementById('usernameHint').textContent = 'Username must be at least 3 characters';
+                    document.getElementById('usernameHint').className = 'input-hint error';
+                    return;
+                }
+
+                usernameTimeout = setTimeout(async () => {
+                    if (username === currentProfile.username) {
+                        document.getElementById('usernameHint').textContent = '';
+                        return;
+                    }
+
+                    const available = await DB.checkUsernameAvailable(username);
+                    if (available) {
+                        document.getElementById('usernameHint').textContent = '✓ Username available';
+                        document.getElementById('usernameHint').className = 'input-hint success';
+                    } else {
+                        document.getElementById('usernameHint').textContent = '✕ Username taken';
+                        document.getElementById('usernameHint').className = 'input-hint error';
+                    }
+                }, 500);
+            });
+
+            // Profile Form
+            document.getElementById('profileForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const btn = document.getElementById('saveProfile');
+                btn.disabled = true;
+                btn.innerHTML = '<div class="spinner"></div> Saving...';
+
+                const updates = {
+                    full_name: document.getElementById('fullName').value,
+                    username: document.getElementById('username').value,
+                    bio: document.getElementById('bio').value,
+                    location: document.getElementById('location').value,
+                    website: document.getElementById('website').value
+                };
+
+                const { error } = await DB.updateProfile(updates);
+
+                if (error) {
+                    alert('Error saving profile: ' + error.message);
+                } else {
+                    currentProfile = { ...currentProfile, ...updates };
+                    btn.innerHTML = '✓ Saved!';
+                }
+
+                setTimeout(() => {
+                    btn.innerHTML = 'Save Changes';
+                    btn.disabled = false;
+                }, 2000);
+            });
+
+            // Change Password
+            document.getElementById('changePasswordBtn').addEventListener('click', async () => {
+                const user = await Auth.getUser();
+                await Auth.resetPassword(user.email);
+                alert('Password reset email sent! Check your inbox.');
+            });
+
+            // User menu
+            document.getElementById('userMenu').addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('userDropdown').classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => {
+                document.getElementById('userDropdown').classList.remove('show');
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                await Auth.signOut();
+            });
+
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('mobile-open');
+            });
+        }
+    </script>
+</body>
+
+</html>

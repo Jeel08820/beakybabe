@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BeakyBabe Profile">
+    <meta property="og:title" content="BeakyBabe Profile">
+    <meta property="og:description" content="Check out my links!">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>@username | BeakyBabe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+    <!-- Loading State -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Profile Page -->
+    <div class="profile-page" id="profilePage" style="display: none;">
+        <!-- Background Effects -->
+        <div class="bg-effects">
+            <div class="bg-gradient"></div>
+            <div class="bg-pattern"></div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="profile-container">
+            <!-- Profile Header -->
+            <header class="profile-header">
+                <div class="avatar" id="avatar">
+                    <span id="avatarInitial">?</span>
+                </div>
+                <h1 class="username" id="displayName">@username</h1>
+                <p class="bio" id="bio"></p>
+                <div class="location" id="locationWrapper" style="display: none;">
+                    <span>📍</span>
+                    <span id="location"></span>
+                </div>
+            </header>
+
+            <!-- Links Section -->
+            <div class="links-section" id="linksSection">
+                <!-- Links will be loaded here -->
+            </div>
+
+            <!-- Products Section -->
+            <div class="products-section" id="productsSection" style="display: none;">
+                <h3 class="section-title">🛒 Shop</h3>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Email Signup -->
+            <div class="email-signup" id="emailSignup" style="display: none;">
+                <h3>📧 Stay Connected</h3>
+                <form id="subscribeForm" class="subscribe-form">
+                    <input type="email" id="subscriberEmail" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <p class="subscribe-note">Get updates directly to your inbox!</p>
+            </div>
+
+            <!-- Social Icons -->
+            <div class="social-icons" id="socialIcons">
+                <!-- Social links will be added here -->
+            </div>
+
+            <!-- Footer -->
+            <footer class="profile-footer">
+                <a href="index.html" class="powered-by">
+                    <span>🐦</span>
+                    <span>Powered by BeakyBabe</span>
+                </a>
+            </footer>
+        </div>
+    </div>
+
+    <!-- 404 State -->
+    <div class="not-found" id="notFound" style="display: none;">
+        <div class="not-found-content">
+            <span class="not-found-icon">🐦</span>
+            <h1>Page Not Found</h1>
+            <p>This BeakyBabe profile doesn't exist... yet!</p>
+            <a href="signup.html" class="btn-claim">Claim this username</a>
+            <a href="index.html" class="btn-home">Go to Homepage</a>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="productModal" style="display: none;">
+        <div class="modal">
+            <button class="modal-close" id="closeProductModal">✕</button>
+            <div class="modal-product">
+                <div class="product-image" id="modalProductImage"></div>
+                <div class="product-details">
+                    <h2 id="modalProductTitle">Product Title</h2>
+                    <p id="modalProductDescription">Description</p>
+                    <div class="product-price" id="modalProductPrice">$0.00</div>
+                    <button class="btn-buy" id="buyButton">
+                        <span>💳</span> Buy Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script>
+        let profileData = null;
+        let linksData = [];
+        let productsData = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get username from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('u') || getPathUsername();
+
+            if (!username) {
+                showNotFound();
+                return;
+            }
+
+            await loadProfile(username);
+        });
+
+        function getPathUsername() {
+            // For production with routing like beakybabe.bio/username
+            const path = window.location.pathname;
+            const match = path.match(/^\/([a-zA-Z0-9_]+)$/);
+            return match ? match[1] : null;
+        }
+
+        async function loadProfile(username) {
+            try {
+                // Fetch profile
+                const { data: profile, error: profileError } = await supabaseClient
+                    .from('profiles')
+                    .select('*')
+                    .eq('username', username.toLowerCase())
+                    .single();
+
+                if (profileError || !profile) {
+                    showNotFound();
+                    return;
+                }
+
+                profileData = profile;
+
+                // Fetch links
+                const { data: links } = await supabaseClient
+                    .from('links')
+                    .select('*')
+                    .eq('user_id', profile.id)
+                    .eq('is_active', true)
+                    .order('position', { ascending: true });
+
+                linksData = links || [];
+
+                // Fetch products
+                const { data: products } = await supabaseClient
+                    .from('products')
+                    .select('*')
+                    .eq('user_id', profile.id)
+                    .eq('is_active', true)
+                    .order('position', { ascending: true });
+
+                productsData = products || [];
+
+                // Record page view
+                recordPageView(profile.id);
+
+                // Render profile
+                renderProfile();
+
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                showNotFound();
+            }
+        }
+
+        function renderProfile() {
+            // Apply theme
+            applyTheme();
+
+            // Update meta tags
+            document.title = `@${profileData.username} | BeakyBabe`;
+            document.querySelector('meta[property="og:title"]').content = profileData.full_name || `@${profileData.username}`;
+            document.querySelector('meta[property="og:description"]').content = profileData.bio || 'Check out my links!';
+
+            // Avatar
+            const initial = (profileData.full_name || profileData.username || '?').charAt(0).toUpperCase();
+            document.getElementById('avatarInitial').textContent = initial;
+            if (profileData.avatar_url) {
+                document.getElementById('avatar').innerHTML = `<img src="${profileData.avatar_url}" alt="Profile">`;
+            }
+
+            // Name and bio
+            document.getElementById('displayName').textContent = profileData.full_name || `@${profileData.username}`;
+            if (profileData.bio) {
+                document.getElementById('bio').textContent = profileData.bio;
+            }
+
+            // Location
+            if (profileData.location) {
+                document.getElementById('location').textContent = profileData.location;
+                document.getElementById('locationWrapper').style.display = 'flex';
+            }
+
+            // Render links
+            renderLinks();
+
+            // Render products
+            renderProducts();
+
+            // Show email signup for creator+ plans
+            if (profileData.plan === 'creator_plus' || profileData.plan === 'enterprise') {
+                document.getElementById('emailSignup').style.display = 'block';
+            }
+
+            // Hide loading, show profile
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('profilePage').style.display = 'block';
+        }
+
+        function applyTheme() {
+            const page = document.getElementById('profilePage');
+            const theme = profileData.theme || 'dark';
+            const primary = profileData.primary_color || '#a855f7';
+            const secondary = profileData.secondary_color || '#ec4899';
+            const fontFamily = profileData.font_family || 'Inter';
+            const buttonStyle = profileData.button_style || 'rounded';
+
+            page.className = `profile-page theme-${theme} btn-style-${buttonStyle}`;
+            page.style.setProperty('--primary-color', primary);
+            page.style.setProperty('--secondary-color', secondary);
+            page.style.setProperty('--font-family', fontFamily);
+        }
+
+        function renderLinks() {
+            const container = document.getElementById('linksSection');
+
+            if (linksData.length === 0) {
+                container.innerHTML = '<p class="no-links">No links yet</p>';
+                return;
+            }
+
+            container.innerHTML = linksData.map(link => `
+                <a href="${escapeHtml(link.url)}" class="link-button" target="_blank" rel="noopener" 
+                   onclick="recordLinkClick('${link.id}', '${profileData.id}')">
+                    <span class="link-icon">${link.icon || '🔗'}</span>
+                    <span class="link-title">${escapeHtml(link.title)}</span>
+                </a>
+            `).join('');
+        }
+
+        function renderProducts() {
+            if (productsData.length === 0) return;
+
+            document.getElementById('productsSection').style.display = 'block';
+            const container = document.getElementById('productsGrid');
+
+            container.innerHTML = productsData.map(product => `
+                <div class="product-card" onclick="openProductModal('${product.id}')">
+                    <div class="product-thumb" style="background-image: url('${product.image_url || ''}')">
+                        ${!product.image_url ? '<span class="no-thumb">📦</span>' : ''}
+                    </div>
+                    <div class="product-info">
+                        <h4>${escapeHtml(product.title)}</h4>
+                        <span class="price">$${parseFloat(product.price).toFixed(2)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openProductModal(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            document.getElementById('modalProductTitle').textContent = product.title;
+            document.getElementById('modalProductDescription').textContent = product.description || '';
+            document.getElementById('modalProductPrice').textContent = `$${parseFloat(product.price).toFixed(2)}`;
+
+            const imageDiv = document.getElementById('modalProductImage');
+            if (product.image_url) {
+                imageDiv.style.backgroundImage = `url('${product.image_url}')`;
+            } else {
+                imageDiv.innerHTML = '<span class="no-thumb-large">📦</span>';
+            }
+
+            document.getElementById('buyButton').onclick = () => {
+                // Redirect to Stripe checkout
+                initiateCheckout(product);
+            };
+
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        async function initiateCheckout(product) {
+            // This would normally call your Stripe checkout endpoint
+            alert(`Checkout for "${product.title}" - $${product.price}\n\nStripe integration required. See stripe-integration.js for implementation.`);
+        }
+
+        async function recordPageView(userId) {
+            try {
+                // Detect visitor info
+                const referrer = document.referrer;
+                let referrerSource = 'direct';
+
+                if (referrer.includes('instagram.com')) referrerSource = 'instagram';
+                else if (referrer.includes('tiktok.com')) referrerSource = 'tiktok';
+                else if (referrer.includes('twitter.com') || referrer.includes('x.com')) referrerSource = 'twitter';
+                else if (referrer.includes('youtube.com')) referrerSource = 'youtube';
+                else if (referrer.includes('facebook.com')) referrerSource = 'facebook';
+                else if (referrer.includes('linkedin.com')) referrerSource = 'linkedin';
+                else if (referrer) referrerSource = 'other';
+
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                const isTablet = /iPad|Android/i.test(navigator.userAgent) && !isMobile;
+                const device = isMobile ? 'mobile' : (isTablet ? 'tablet' : 'desktop');
+
+                await supabaseClient
+                    .from('page_views')
+                    .insert({
+                        user_id: userId,
+                        referrer: referrer,
+                        referrer_source: referrerSource,
+                        visitor_device: device,
+                        visitor_browser: navigator.userAgent.split(' ').pop()
+                    });
+            } catch (error) {
+                console.log('Analytics error:', error);
+            }
+        }
+
+        async function recordLinkClick(linkId, userId) {
+            try {
+                const referrer = document.referrer;
+                let referrerSource = 'direct';
+
+                if (referrer.includes('instagram.com')) referrerSource = 'instagram';
+                else if (referrer.includes('tiktok.com')) referrerSource = 'tiktok';
+                else if (referrer.includes('twitter.com') || referrer.includes('x.com')) referrerSource = 'twitter';
+                else if (referrer.includes('youtube.com')) referrerSource = 'youtube';
+                else if (referrer) referrerSource = 'other';
+
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                const device = isMobile ? 'mobile' : 'desktop';
+
+                await supabaseClient
+                    .from('link_clicks')
+                    .insert({
+                        link_id: linkId,
+                        user_id: userId,
+                        referrer_source: referrerSource,
+                        visitor_device: device
+                    });
+            } catch (error) {
+                console.log('Click tracking error:', error);
+            }
+        }
+
+        function showNotFound() {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('notFound').style.display = 'flex';
+        }
+
+        // Subscribe form
+        document.getElementById('subscribeForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('subscriberEmail').value;
+
+            try {
+                await supabaseClient
+                    .from('subscribers')
+                    .insert({
+                        user_id: profileData.id,
+                        email: email
+                    });
+
+                e.target.innerHTML = '<p class="subscribe-success">✓ Subscribed!</p>';
+            } catch (error) {
+                alert('Could not subscribe. Please try again.');
+            }
+        });
+
+        // Modal close
+        document.getElementById('closeProductModal')?.addEventListener('click', () => {
+            document.getElementById('productModal').style.display = 'none';
+        });
+
+        document.getElementById('productModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'productModal') {
+                document.getElementById('productModal').style.display = 'none';
+            }
+        });
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,358 @@
+<!-- ========================================
+     BeakyBabe - Weekly Analytics Report Email
+     ======================================== -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Weekly BeakyBabe Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            padding: 32px 40px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .date-range {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h1 {
+            color: #1a1a2e;
+            font-size: 22px;
+            margin-top: 0;
+        }
+
+        h2 {
+            color: #1a1a2e;
+            font-size: 18px;
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            color: #666666;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 120px;
+            background: #f8f8fc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1a1a2e;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666666;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .stat-change.positive {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .stat-change.negative {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .stat-change.neutral {
+            background: rgba(0, 0, 0, 0.05);
+            color: #999999;
+        }
+
+        .top-links {
+            background: #f8f8fc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+
+        .top-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .top-link:last-child {
+            border-bottom: none;
+        }
+
+        .link-rank {
+            font-weight: bold;
+            color: #a855f7;
+            margin-right: 12px;
+        }
+
+        .link-name {
+            flex: 1;
+            color: #333333;
+        }
+
+        .link-clicks {
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .sources-list {
+            margin: 16px 0;
+        }
+
+        .source-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .source-name {
+            width: 100px;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .source-bar {
+            flex: 1;
+            height: 8px;
+            background: #eeeeee;
+            border-radius: 4px;
+            margin: 0 12px;
+            overflow: hidden;
+        }
+
+        .source-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            border-radius: 4px;
+        }
+
+        .source-percent {
+            width: 40px;
+            text-align: right;
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            color: white !important;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .insights {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.05) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+
+        .insight-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .insight-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .insight-icon {
+            font-size: 18px;
+            margin-right: 12px;
+        }
+
+        .insight-text {
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .footer {
+            background: #f8f8fc;
+            padding: 32px 40px;
+            text-align: center;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .footer p {
+            color: #999999;
+            font-size: 14px;
+            margin: 0 0 12px 0;
+        }
+
+        .unsubscribe {
+            color: #999999;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        .unsubscribe a {
+            color: #999999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🐦</div>
+            <p class="logo-text">Your Weekly Report</p>
+            <p class="date-range">{{start_date}} - {{end_date}}</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h1>Hey {{name}}, here's how your page performed! 📊</h1>
+
+            <p>Great week! Here's a quick summary of your BeakyBabe page activity.</p>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value">{{total_views}}</span>
+                    <span class="stat-label">Page Views</span>
+                    <span class="stat-change {{views_change_class}}">{{views_change}}</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">{{total_clicks}}</span>
+                    <span class="stat-label">Link Clicks</span>
+                    <span class="stat-change {{clicks_change_class}}">{{clicks_change}}</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">{{ctr}}%</span>
+                    <span class="stat-label">Click Rate</span>
+                    <span class="stat-change neutral">—</span>
+                </div>
+            </div>
+
+            <!-- Top Links -->
+            <h2>🔥 Top Performing Links</h2>
+            <div class="top-links">
+                {{#each top_links}}
+                <div class="top-link">
+                    <span class="link-rank">#{{rank}}</span>
+                    <span class="link-name">{{title}}</span>
+                    <span class="link-clicks">{{clicks}} clicks</span>
+                </div>
+                {{/each}}
+            </div>
+
+            <!-- Traffic Sources -->
+            <h2>🌐 Traffic Sources</h2>
+            <div class="sources-list">
+                {{#each sources}}
+                <div class="source-item">
+                    <span class="source-name">{{name}}</span>
+                    <div class="source-bar">
+                        <div class="source-fill" style="width: {{percent}}%;"></div>
+                    </div>
+                    <span class="source-percent">{{percent}}%</span>
+                </div>
+                {{/each}}
+            </div>
+
+            <!-- AI Insights (Pro) -->
+            {{#if is_pro}}
+            <h2>💡 AI Insights</h2>
+            <div class="insights">
+                {{#each insights}}
+                <div class="insight-item">
+                    <span class="insight-icon">{{icon}}</span>
+                    <span class="insight-text">{{text}}</span>
+                </div>
+                {{/each}}
+            </div>
+            {{/if}}
+
+            <p style="text-align: center; margin-top: 32px;">
+                <a href="{{dashboard_url}}" class="btn">View Full Analytics →</a>
+            </p>
+
+            <p style="margin-top: 32px; text-align: center; color: #999999; font-size: 14px;">
+                Keep creating amazing content! 🚀
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Made with 💜 by BeakyBabe</p>
+            <p class="unsubscribe">
+                You're receiving this because you're subscribed to weekly reports.<br>
+                <a href="{{unsubscribe_url}}">Unsubscribe</a> or <a href="{{settings_url}}">manage preferences</a>.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

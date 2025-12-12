@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BeakyBabe Creator Dashboard">
+    <title>Dashboard | BeakyBabe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Loading State -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <p>Loading your dashboard...</p>
+    </div>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-layout" id="dashboardLayout" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🐦</span>
+                    <span class="logo-text">BeakyBabe</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                    <span class="nav-icon">📊</span>
+                    <span>Overview</span>
+                </a>
+                <a href="links.html" class="nav-item">
+                    <span class="nav-icon">🔗</span>
+                    <span>My Links</span>
+                </a>
+                <a href="appearance.html" class="nav-item">
+                    <span class="nav-icon">🎨</span>
+                    <span>Appearance</span>
+                </a>
+                <a href="analytics.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span>Analytics</span>
+                </a>
+                <a href="store.html" class="nav-item">
+                    <span class="nav-icon">🛒</span>
+                    <span>Store</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="plan-badge">
+                    <span class="badge-icon">⭐</span>
+                    <span>Free Plan</span>
+                </div>
+                <a href="#" class="upgrade-btn">Upgrade to Pro</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <span></span><span></span><span></span>
+                    </button>
+                    <div class="page-title">
+                        <h1>Overview</h1>
+                        <p>Welcome back! Here's what's happening with your page.</p>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <a href="#" class="preview-btn" id="previewBtn">
+                        <span class="btn-icon">👁️</span>
+                        <span>Preview Page</span>
+                    </a>
+                    <div class="user-menu" id="userMenu">
+                        <div class="user-avatar" id="userAvatar">
+                            <span>?</span>
+                        </div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-header">
+                                <span class="user-name" id="userName">Loading...</span>
+                                <span class="user-email" id="userEmail">...</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" data-section="settings">
+                                <span>⚙️</span> Settings
+                            </a>
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span>🚪</span> Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👁️</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalViews">0</span>
+                            <span class="stat-label">Total Views</span>
+                        </div>
+                        <span class="stat-change positive">+12%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👆</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalClicks">0</span>
+                            <span class="stat-label">Link Clicks</span>
+                        </div>
+                        <span class="stat-change positive">+8%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📧</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalSubscribers">0</span>
+                            <span class="stat-label">Subscribers</span>
+                        </div>
+                        <span class="stat-change positive">+24%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalRevenue">$0</span>
+                            <span class="stat-label">Revenue</span>
+                        </div>
+                        <span class="stat-change neutral">—</span>
+                    </div>
+                </div>
+
+                <!-- Main Grid -->
+                <div class="content-grid">
+                    <!-- Quick Actions -->
+                    <div class="dashboard-card quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <button class="action-btn">
+                                <span class="action-icon">➕</span>
+                                <span>Add Link</span>
+                            </button>
+                            <button class="action-btn">
+                                <span class="action-icon">🎨</span>
+                                <span>Edit Theme</span>
+                            </button>
+                            <button class="action-btn">
+                                <span class="action-icon">📤</span>
+                                <span>Share Page</span>
+                            </button>
+                            <button class="action-btn">
+                                <span class="action-icon">📱</span>
+                                <span>QR Code</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Your Link -->
+                    <div class="dashboard-card your-link">
+                        <h3>Your BeakyBabe Link</h3>
+                        <div class="link-display">
+                            <div class="link-url">
+                                <span class="link-prefix">beakybabe.bio/</span>
+                                <span class="link-username" id="linkUsername">username</span>
+                            </div>
+                            <button class="copy-btn" id="copyLinkBtn">
+                                <span>📋</span> Copy
+                            </button>
+                        </div>
+                        <p class="link-hint">Share this link on your social profiles!</p>
+                    </div>
+
+                    <!-- Top Links -->
+                    <div class="dashboard-card top-links">
+                        <div class="card-header">
+                            <h3>Top Performing Links</h3>
+                            <a href="#" class="view-all">View All →</a>
+                        </div>
+                        <div class="links-list">
+                            <div class="link-item">
+                                <div class="link-info">
+                                    <span class="link-icon">📺</span>
+                                    <span class="link-name">Latest YouTube Video</span>
+                                </div>
+                                <span class="link-clicks">127 clicks</span>
+                            </div>
+                            <div class="link-item">
+                                <div class="link-info">
+                                    <span class="link-icon">📱</span>
+                                    <span class="link-name">Follow on TikTok</span>
+                                </div>
+                                <span class="link-clicks">89 clicks</span>
+                            </div>
+                            <div class="link-item">
+                                <div class="link-info">
+                                    <span class="link-icon">🛒</span>
+                                    <span class="link-name">Shop My Presets</span>
+                                </div>
+                                <span class="link-clicks">54 clicks</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Traffic Sources -->
+                    <div class="dashboard-card traffic-sources">
+                        <div class="card-header">
+                            <h3>Traffic Sources</h3>
+                            <span class="time-range">Last 7 days</span>
+                        </div>
+                        <div class="sources-list">
+                            <div class="source-item">
+                                <div class="source-info">
+                                    <span class="source-name">Instagram</span>
+                                    <div class="source-bar">
+                                        <div class="source-fill" style="width: 65%;"></div>
+                                    </div>
+                                </div>
+                                <span class="source-percent">65%</span>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-info">
+                                    <span class="source-name">TikTok</span>
+                                    <div class="source-bar">
+                                        <div class="source-fill" style="width: 20%;"></div>
+                                    </div>
+                                </div>
+                                <span class="source-percent">20%</span>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-info">
+                                    <span class="source-name">Twitter</span>
+                                    <div class="source-bar">
+                                        <div class="source-fill" style="width: 10%;"></div>
+                                    </div>
+                                </div>
+                                <span class="source-percent">10%</span>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-info">
+                                    <span class="source-name">Direct</span>
+                                    <div class="source-bar">
+                                        <div class="source-fill" style="width: 5%;"></div>
+                                    </div>
+                                </div>
+                                <span class="source-percent">5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Getting Started -->
+                <div class="dashboard-card getting-started">
+                    <h3>🚀 Complete Your Setup</h3>
+                    <p>Finish these steps to make the most of your BeakyBabe page:</p>
+                    <div class="checklist">
+                        <label class="checklist-item completed">
+                            <input type="checkbox" checked disabled>
+                            <span class="checkmark">✓</span>
+                            <span>Create your account</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            <span>Add your first link</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            <span>Upload a profile photo</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            <span>Customize your theme</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            <span>Share your link</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="db.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const dashboardLayout = document.getElementById('dashboardLayout');
+
+            // Check authentication
+            const session = await Auth.requireAuth();
+            if (!session) return;
+
+            // Get user info
+            const user = await Auth.getUser();
+
+            // Update UI with user info
+            const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').innerHTML = `<span>${userName.charAt(0).toUpperCase()}</span>`;
+            document.getElementById('linkUsername').textContent = userName.toLowerCase().replace(/\s+/g, '');
+
+            // Hide loading, show dashboard
+            loadingScreen.style.display = 'none';
+            dashboardLayout.style.display = 'flex';
+
+            // Load analytics data
+            loadDashboardData();
+
+            // User menu toggle
+            const userMenu = document.getElementById('userMenu');
+            const userDropdown = document.getElementById('userDropdown');
+
+            userMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => {
+                userDropdown.classList.remove('show');
+            });
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                await Auth.signOut();
+            });
+
+            // Copy link
+            document.getElementById('copyLinkBtn').addEventListener('click', async () => {
+                const username = document.getElementById('linkUsername').textContent;
+                const link = `beakybabe.bio/${username}`;
+
+                try {
+                    await navigator.clipboard.writeText(`https://${link}`);
+                    const btn = document.getElementById('copyLinkBtn');
+                    btn.innerHTML = '<span>✓</span> Copied!';
+                    setTimeout(() => {
+                        btn.innerHTML = '<span>📋</span> Copy';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            });
+
+            // Quick action buttons
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const action = btn.querySelector('span:last-child').textContent;
+                    if (action === 'Add Link') window.location.href = 'links.html';
+                    if (action === 'Edit Theme') window.location.href = 'appearance.html';
+                    if (action === 'Share Page') {
+                        const username = document.getElementById('linkUsername').textContent;
+                        navigator.clipboard.writeText(`https://beakybabe.bio/${username}`);
+                        alert('Link copied to clipboard!');
+                    }
+                    if (action === 'QR Code') alert('QR Code feature coming soon!');
+                });
+            });
+
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('mobile-open');
+            });
+        });
+
+        async function loadDashboardData() {
+            try {
+                // Load analytics summary
+                const summary = await DB.getAnalyticsSummary(30);
+                document.getElementById('totalViews').textContent = formatNumber(summary.views);
+                document.getElementById('totalClicks').textContent = formatNumber(summary.clicks);
+                document.getElementById('totalSubscribers').textContent = formatNumber(summary.subscribers);
+                document.getElementById('totalRevenue').textContent = '$' + summary.revenue.toFixed(2);
+
+                // Load top links
+                const topLinks = await DB.getTopLinks(30, 3);
+                const linksContainer = document.querySelector('.top-links .links-list');
+                if (topLinks.length > 0) {
+                    linksContainer.innerHTML = topLinks.map(link => `
+                        <div class="link-item">
+                            <div class="link-info">
+                                <span class="link-icon">${link.icon || '🔗'}</span>
+                                <span class="link-name">${escapeHtml(link.title)}</span>
+                            </div>
+                            <span class="link-clicks">${link.total_clicks} clicks</span>
+                        </div>
+                    `).join('');
+                }
+
+                // Load traffic sources
+                const sources = await DB.getTrafficSources(7);
+                const sourcesContainer = document.querySelector('.traffic-sources .sources-list');
+                if (sources.length > 0) {
+                    sourcesContainer.innerHTML = sources.slice(0, 4).map(source => `
+                        <div class="source-item">
+                            <div class="source-info">
+                                <span class="source-name">${capitalizeFirst(source.name)}</span>
+                                <div class="source-bar">
+                                    <div class="source-fill" style="width: ${source.percent}%;"></div>
+                                </div>
+                            </div>
+                            <span class="source-percent">${source.percent}%</span>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.log('Analytics loading (database may not be set up yet):', error);
+            }
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toString();
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>

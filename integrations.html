@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Integrations | BeakyBabe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="integrations.css">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <p>Loading integrations...</p>
+    </div>
+
+    <div class="dashboard-layout" id="dashboardLayout" style="display: none;">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🐦</span>
+                    <span class="logo-text">BeakyBabe</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span>Overview</span></a>
+                <a href="links.html" class="nav-item"><span class="nav-icon">🔗</span><span>My Links</span></a>
+                <a href="appearance.html" class="nav-item"><span class="nav-icon">🎨</span><span>Appearance</span></a>
+                <a href="analytics.html" class="nav-item"><span class="nav-icon">📈</span><span>Analytics</span></a>
+                <a href="store.html" class="nav-item"><span class="nav-icon">🛒</span><span>Store</span></a>
+                <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="plan-badge"><span class="badge-icon">⭐</span><span>Free Plan</span></div>
+                <a href="#" class="upgrade-btn">Upgrade to Pro</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+                    <div class="page-title">
+                        <h1>🔌 Social Integrations</h1>
+                        <p>Connect your social accounts to auto-sync content</p>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-menu" id="userMenu">
+                        <div class="user-avatar" id="userAvatar"><span>?</span></div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-header">
+                                <span class="user-name" id="userName">Loading...</span>
+                                <span class="user-email" id="userEmail">...</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="settings.html" class="dropdown-item"><span>⚙️</span> Settings</a>
+                            <a href="#" class="dropdown-item" id="logoutBtn"><span>🚪</span> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="integrations-content">
+                <!-- Connected Platforms -->
+                <section class="section-card">
+                    <h2>Connected Platforms</h2>
+                    <p class="section-desc">Sync your latest content automatically</p>
+
+                    <div class="platforms-grid">
+                        <!-- TikTok -->
+                        <div class="platform-card" data-platform="tiktok">
+                            <div class="platform-icon tiktok-icon">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                                    <path
+                                        d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                                </svg>
+                            </div>
+                            <div class="platform-info">
+                                <h3>TikTok</h3>
+                                <p class="platform-status disconnected" id="tiktok-status">Not connected</p>
+                            </div>
+                            <button class="connect-btn" id="tiktok-btn">Connect</button>
+                        </div>
+
+                        <!-- YouTube -->
+                        <div class="platform-card" data-platform="youtube">
+                            <div class="platform-icon youtube-icon">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                                    <path
+                                        d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.67 31.67 0 0 0 0 12a31.67 31.67 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.84.55 9.38.55 9.38.55s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.67 31.67 0 0 0 24 12a31.67 31.67 0 0 0-.5-5.81zM9.54 15.57V8.43L15.82 12l-6.28 3.57z" />
+                                </svg>
+                            </div>
+                            <div class="platform-info">
+                                <h3>YouTube</h3>
+                                <p class="platform-status disconnected" id="youtube-status">Not connected</p>
+                            </div>
+                            <button class="connect-btn" id="youtube-btn">Connect</button>
+                        </div>
+
+                        <!-- Instagram -->
+                        <div class="platform-card" data-platform="instagram">
+                            <div class="platform-icon instagram-icon">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+                                </svg>
+                            </div>
+                            <div class="platform-info">
+                                <h3>Instagram</h3>
+                                <p class="platform-status disconnected" id="instagram-status">Not connected</p>
+                            </div>
+                            <button class="connect-btn" id="instagram-btn">Connect</button>
+                        </div>
+
+                        <!-- Twitter/X -->
+                        <div class="platform-card" data-platform="twitter">
+                            <div class="platform-icon twitter-icon">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                                    <path
+                                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                </svg>
+                            </div>
+                            <div class="platform-info">
+                                <h3>Twitter / X</h3>
+                                <p class="platform-status disconnected" id="twitter-status">Not connected</p>
+                            </div>
+                            <button class="connect-btn" id="twitter-btn">Connect</button>
+                        </div>
+
+                        <!-- Spotify -->
+                        <div class="platform-card" data-platform="spotify">
+                            <div class="platform-icon spotify-icon">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                                    <path
+                                        d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+                                </svg>
+                            </div>
+                            <div class="platform-info">
+                                <h3>Spotify</h3>
+                                <p class="platform-status disconnected" id="spotify-status">Not connected</p>
+                            </div>
+                            <button class="connect-btn" id="spotify-btn">Connect</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sync Settings -->
+                <section class="section-card">
+                    <h2>Sync Settings</h2>
+                    <p class="section-desc">Configure how content is synced</p>
+
+                    <div class="sync-options">
+                        <div class="sync-option">
+                            <div class="option-info">
+                                <h4>Auto-Sync New Content</h4>
+                                <p>Automatically add new posts as links</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="autoSync" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="sync-option">
+                            <div class="option-info">
+                                <h4>Sync Interval</h4>
+                                <p>How often to check for new content</p>
+                            </div>
+                            <select id="syncInterval" class="select-input">
+                                <option value="1">Every hour</option>
+                                <option value="6">Every 6 hours</option>
+                                <option value="24" selected>Daily</option>
+                                <option value="168">Weekly</option>
+                            </select>
+                        </div>
+
+                        <div class="sync-option">
+                            <div class="option-info">
+                                <h4>Maximum Links per Platform</h4>
+                                <p>Limit how many links to sync</p>
+                            </div>
+                            <select id="maxLinks" class="select-input">
+                                <option value="1">Latest only</option>
+                                <option value="3" selected>Last 3</option>
+                                <option value="5">Last 5</option>
+                                <option value="10">Last 10</option>
+                            </select>
+                        </div>
+
+                        <div class="sync-option">
+                            <div class="option-info">
+                                <h4>Show Thumbnails</h4>
+                                <p>Display video/post thumbnails on links</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="showThumbnails" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="syncNowBtn">
+                        <span>🔄</span> Sync Now
+                    </button>
+                </section>
+
+                <!-- Synced Links Preview -->
+                <section class="section-card">
+                    <h2>Synced Links</h2>
+                    <p class="section-desc">Links automatically added from your connected accounts</p>
+
+                    <div class="synced-links-list" id="syncedLinksList">
+                        <div class="empty-synced">
+                            <span>📡</span>
+                            <p>No synced links yet. Connect a platform to get started!</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="db.js"></script>
+    <script>
+        let connections = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const session = await Auth.requireAuth();
+            if (!session) return;
+
+            const user = await Auth.getUser();
+            const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').innerHTML = `<span>${userName.charAt(0).toUpperCase()}</span>`;
+
+            await loadConnections();
+            await loadSyncedLinks();
+
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('dashboardLayout').style.display = 'flex';
+
+            setupEventListeners();
+        });
+
+        async function loadConnections() {
+            const { data } = await supabaseClient
+                .from('social_connections')
+                .select('*');
+
+            connections = data || [];
+
+            // Update UI for each platform
+            ['tiktok', 'youtube', 'instagram', 'twitter', 'spotify'].forEach(platform => {
+                const connection = connections.find(c => c.platform === platform);
+                const statusEl = document.getElementById(`${platform}-status`);
+                const btnEl = document.getElementById(`${platform}-btn`);
+                const cardEl = document.querySelector(`[data-platform="${platform}"]`);
+
+                if (connection) {
+                    statusEl.textContent = `Connected as ${connection.platform_username || 'User'}`;
+                    statusEl.classList.remove('disconnected');
+                    statusEl.classList.add('connected');
+                    btnEl.textContent = 'Disconnect';
+                    btnEl.classList.add('connected');
+                    cardEl.classList.add('is-connected');
+                }
+            });
+        }
+
+        async function loadSyncedLinks() {
+            const { data: links } = await supabaseClient
+                .from('links')
+                .select('*')
+                .in('source', ['tiktok', 'youtube', 'instagram', 'twitter', 'spotify'])
+                .order('created_at', { ascending: false })
+                .limit(10);
+
+            const container = document.getElementById('syncedLinksList');
+
+            if (!links || links.length === 0) {
+                return;
+            }
+
+            container.innerHTML = links.map(link => `
+                <div class="synced-link-item">
+                    <div class="link-thumb" style="background-image: url('${link.thumbnail || ''}')">
+                        ${!link.thumbnail ? '<span>' + (link.icon || '🔗') + '</span>' : ''}
+                    </div>
+                    <div class="link-info">
+                        <h4>${escapeHtml(link.title)}</h4>
+                        <span class="link-source ${link.source}">${link.source}</span>
+                    </div>
+                    <label class="toggle-switch small">
+                        <input type="checkbox" ${link.is_active ? 'checked' : ''} onchange="toggleLink('${link.id}', this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // Platform connect buttons
+            ['tiktok', 'youtube', 'instagram', 'twitter', 'spotify'].forEach(platform => {
+                document.getElementById(`${platform}-btn`).addEventListener('click', () => {
+                    const connection = connections.find(c => c.platform === platform);
+                    if (connection) {
+                        disconnectPlatform(platform);
+                    } else {
+                        connectPlatform(platform);
+                    }
+                });
+            });
+
+            // Sync Now button
+            document.getElementById('syncNowBtn').addEventListener('click', async () => {
+                const btn = document.getElementById('syncNowBtn');
+                btn.disabled = true;
+                btn.innerHTML = '<div class="spinner small"></div> Syncing...';
+
+                // In production, call your sync API
+                await new Promise(r => setTimeout(r, 2000));
+
+                btn.innerHTML = '✓ Synced!';
+                setTimeout(() => {
+                    btn.innerHTML = '<span>🔄</span> Sync Now';
+                    btn.disabled = false;
+                }, 2000);
+
+                await loadSyncedLinks();
+            });
+
+            // User menu
+            document.getElementById('userMenu').addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('userDropdown').classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => {
+                document.getElementById('userDropdown').classList.remove('show');
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                await Auth.signOut();
+            });
+
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('mobile-open');
+            });
+        }
+
+        async function connectPlatform(platform) {
+            // In production, redirect to OAuth flow
+            const redirectUri = `${window.location.origin}/api/social/callback`;
+
+            // Call API to get auth URL
+            alert(`Connecting to ${platform}...\n\nIn production, this would redirect to the OAuth flow.\n\nSee api/social-sync.js for implementation.`);
+        }
+
+        async function disconnectPlatform(platform) {
+            if (!confirm(`Disconnect ${platform}? Synced links will remain but won't update.`)) return;
+
+            await supabaseClient
+                .from('social_connections')
+                .delete()
+                .eq('platform', platform);
+
+            // Update UI
+            const statusEl = document.getElementById(`${platform}-status`);
+            const btnEl = document.getElementById(`${platform}-btn`);
+            const cardEl = document.querySelector(`[data-platform="${platform}"]`);
+
+            statusEl.textContent = 'Not connected';
+            statusEl.classList.remove('connected');
+            statusEl.classList.add('disconnected');
+            btnEl.textContent = 'Connect';
+            btnEl.classList.remove('connected');
+            cardEl.classList.remove('is-connected');
+
+            connections = connections.filter(c => c.platform !== platform);
+        }
+
+        async function toggleLink(linkId, isActive) {
+            await supabaseClient
+                .from('links')
+                .update({ is_active: isActive })
+                .eq('id', linkId);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>

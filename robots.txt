@@ -1,0 +1,24 @@
+/* robots.txt for BeakyBabe */
+User-agent: *
+Allow: /
+
+# Public pages
+Allow: /index.html
+Allow: /login.html
+Allow: /signup.html
+Allow: /profile.html
+
+# Block dashboard (requires auth)
+Disallow: /dashboard.html
+Disallow: /links.html
+Disallow: /analytics.html
+Disallow: /appearance.html
+Disallow: /settings.html
+Disallow: /store.html
+Disallow: /integrations.html
+
+# Block API
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://beakybabe.bio/sitemap.xml

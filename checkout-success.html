@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful | BeakyBabe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .success-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px 40px;
+        }
+
+        .checkmark-circle {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            font-size: 52px;
+            animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .order-details {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .order-row:last-child {
+            border-bottom: none;
+        }
+
+        .order-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .order-value {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .download-section {
+            margin-bottom: 32px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+        }
+
+        .email-note {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin-top: 16px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .footer {
+            margin-top: 32px;
+        }
+
+        .powered-by {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(168, 85, 247, 0.2);
+            border-top-color: #a855f7;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: confetti-fall 3s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+
+    <div class="container">
+        <!-- Loading State -->
+        <div class="success-card" id="loadingState">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Verifying payment...</p>
+            </div>
+        </div>
+
+        <!-- Success State (hidden by default) -->
+        <div class="success-card" id="successState" style="display: none;">
+            <div class="checkmark-circle">✓</div>
+            <h1>Payment Successful!</h1>
+            <p class="subtitle">Thank you for your purchase. Your order has been confirmed.</p>
+
+            <div class="order-details">
+                <div class="order-row">
+                    <span class="order-label">Order ID</span>
+                    <span class="order-value" id="orderId">#XXXXXXXX</span>
+                </div>
+                <div class="order-row">
+                    <span class="order-label">Product</span>
+                    <span class="order-value" id="productName">Loading...</span>
+                </div>
+                <div class="order-row">
+                    <span class="order-label">Amount</span>
+                    <span class="order-value" id="orderAmount">$0.00</span>
+                </div>
+                <div class="order-row">
+                    <span class="order-label">Date</span>
+                    <span class="order-value" id="orderDate">Today</span>
+                </div>
+            </div>
+
+            <div class="download-section" id="downloadSection" style="display: none;">
+                <button class="download-btn" id="downloadBtn">
+                    <span>📁</span> Download Your File
+                </button>
+                <p class="email-note">A download link has also been sent to your email</p>
+            </div>
+
+            <a href="#" class="back-link" id="backLink">
+                ← Back to creator's page
+            </a>
+
+            <div class="footer">
+                <a href="index.html" class="powered-by">
+                    <span>🐦</span>
+                    <span>Powered by BeakyBabe</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div class="success-card" id="errorState" style="display: none;">
+            <div class="checkmark-circle" style="background: linear-gradient(135deg, #ef4444, #f97316);">✕</div>
+            <h1>Something Went Wrong</h1>
+            <p class="subtitle" id="errorMessage">We couldn't verify your payment. Please contact support.</p>
+            <a href="index.html" class="back-link">← Go to Homepage</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script>
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
+
+            if (!sessionId) {
+                showError('No payment session found');
+                return;
+            }
+
+            try {
+                // In production, verify the session with your backend
+                // For now, we'll simulate success
+
+                // Simulate API call delay
+                await new Promise(r => setTimeout(r, 1500));
+
+                // Mock order data (replace with real API call)
+                const orderData = {
+                    id: sessionId.slice(0, 8).toUpperCase(),
+                    productName: 'Digital Download',
+                    amount: 29.00,
+                    date: new Date().toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    }),
+                    fileUrl: null, // Would be populated for digital products
+                    creatorPage: 'profile.html'
+                };
+
+                showSuccess(orderData);
+                createConfetti();
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Failed to verify payment');
+            }
+        });
+
+        function showSuccess(data) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('successState').style.display = 'block';
+
+            document.getElementById('orderId').textContent = '#' + data.id;
+            document.getElementById('productName').textContent = data.productName;
+            document.getElementById('orderAmount').textContent = '$' + data.amount.toFixed(2);
+            document.getElementById('orderDate').textContent = data.date;
+            document.getElementById('backLink').href = data.creatorPage;
+
+            if (data.fileUrl) {
+                document.getElementById('downloadSection').style.display = 'block';
+                document.getElementById('downloadBtn').onclick = () => {
+                    window.location.href = data.fileUrl;
+                };
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('errorState').style.display = 'block';
+            document.getElementById('errorMessage').textContent = message;
+        }
+    </script>
+</body>
+
+</html>

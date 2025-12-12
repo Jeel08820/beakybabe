@@ -1,0 +1,310 @@
+/* ========================================
+   BeakyBabe - Integrations Page Styles
+   ======================================== */
+
+.integrations-content {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Section Card */
+.section-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.section-card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.section-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+/* Platforms Grid */
+.platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.platform-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: all var(--transition-fast);
+}
+
+.platform-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.platform-card.is-connected {
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.platform-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.tiktok-icon {
+    background: linear-gradient(135deg, #ff0050, #00f2ea);
+    color: white;
+}
+
+.youtube-icon {
+    background: #ff0000;
+    color: white;
+}
+
+.instagram-icon {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    color: white;
+}
+
+.twitter-icon {
+    background: #1a1a2e;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.spotify-icon {
+    background: #1db954;
+    color: white;
+}
+
+.platform-info {
+    flex: 1;
+}
+
+.platform-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.platform-status {
+    font-size: 13px;
+}
+
+.platform-status.disconnected {
+    color: var(--text-muted);
+}
+
+.platform-status.connected {
+    color: #10b981;
+}
+
+.connect-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.connect-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.connect-btn.connected {
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.connect-btn.connected:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+/* Sync Options */
+.sync-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.sync-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.option-info h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.option-info p {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.select-input {
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.select-input option {
+    background: #1a1a2e;
+}
+
+/* Synced Links List */
+.synced-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.synced-link-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.link-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.synced-link-item .link-info {
+    flex: 1;
+}
+
+.synced-link-item .link-info h4 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.link-source {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.link-source.tiktok {
+    background: rgba(255, 0, 80, 0.2);
+    color: #ff0050;
+}
+
+.link-source.youtube {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff0000;
+}
+
+.link-source.instagram {
+    background: rgba(131, 58, 180, 0.2);
+    color: #833ab4;
+}
+
+.link-source.twitter {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.link-source.spotify {
+    background: rgba(29, 185, 84, 0.2);
+    color: #1db954;
+}
+
+/* Empty State */
+.empty-synced {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+}
+
+.empty-synced span {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.empty-synced p {
+    font-size: 14px;
+}
+
+/* Small Spinner */
+.spinner.small {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .integrations-content {
+        padding: 20px;
+    }
+
+    .platform-card {
+        flex-wrap: wrap;
+    }
+
+    .connect-btn {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .sync-option {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+}
