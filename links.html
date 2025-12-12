@@ -233,14 +233,18 @@
         });
 
         async function loadLinks() {
+            console.log('Loading links...');
             const { data: links, error } = await DB.getLinks();
+
+            console.log('Links response:', { links, error });
 
             if (error) {
                 console.error('Error loading links:', error);
                 return;
             }
 
-            currentLinks = links;
+            currentLinks = links || [];
+            console.log('Current links:', currentLinks);
             renderLinks();
         }
 

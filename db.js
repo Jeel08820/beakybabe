@@ -50,11 +50,20 @@ const DB = {
 
     async getLinks() {
         const user = await Auth.getUser();
+        console.log('getLinks - user:', user);
+
+        if (!user) {
+            console.error('getLinks - No user found');
+            return { data: [], error: { message: 'Not authenticated' } };
+        }
+
         const { data, error } = await supabaseClient
             .from('links')
             .select('*')
             .eq('user_id', user.id)
             .order('position', { ascending: true });
+
+        console.log('getLinks - response:', { data, error });
         return { data: data || [], error };
     },
 

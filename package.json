@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx serve -l 3000",
     "start": "npx serve -l 3000",
-    "build": "echo 'Static site - no build required'",
+    "build": "node build.js",
     "deploy:vercel": "vercel --prod",
     "deploy:netlify": "netlify deploy --prod"
   },
