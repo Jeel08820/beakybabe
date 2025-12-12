@@ -42,7 +42,7 @@
             </nav>
             <div class="sidebar-footer">
                 <div class="plan-badge"><span class="badge-icon">⭐</span><span>Free Plan</span></div>
-                <a href="#" class="upgrade-btn">Upgrade to Pro</a>
+                <a href="settings.html" class="upgrade-btn">Upgrade to Pro</a>
             </div>
         </aside>
 
@@ -155,7 +155,7 @@
                             <span class="setup-icon">🏦</span>
                             <h3>Connect Payment Account</h3>
                             <p>Connect Stripe to receive payouts from your sales</p>
-                            <button class="btn btn-primary">Connect Stripe</button>
+                            <button class="btn btn-primary" id="connectStripeBtn">Connect Stripe</button>
                         </div>
                     </div>
                 </div>
@@ -425,6 +425,21 @@
 
             document.getElementById('mobileMenuBtn').addEventListener('click', () => {
                 document.getElementById('sidebar').classList.toggle('mobile-open');
+            });
+
+            // Connect Stripe
+            document.getElementById('connectStripeBtn').addEventListener('click', () => {
+                // In a real app, this redirects to Stripe OAuth
+                const startStripeFlow = confirm('In production, this would redirect to Stripe.\n\nSimulate "Connected" state?');
+                if (startStripeFlow) {
+                    alert('Stripe Connected! Payouts enabled.');
+                    document.querySelector('.setup-card').innerHTML = `
+                        <span class="setup-icon" style="color:#10b981">✅</span>
+                        <h3>Stripe Connected</h3>
+                        <p>Your payouts are active and scheduled daily.</p>
+                        <button class="btn btn-outline" disabled>Connected</button>
+                    `;
+                }
             });
         }
 
