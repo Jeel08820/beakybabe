@@ -73,8 +73,12 @@ const DB = {
 
     async createLink(link) {
         const user = await Auth.getUser();
+        if (!user) {
+            return { data: null, error: { message: 'Not authenticated. Please log in again.' } };
+        }
+
         const { data: links } = await this.getLinks();
-        const position = links.length;
+        const position = links ? links.length : 0;
 
         const { data, error } = await supabaseClient
             .from('links')
@@ -85,6 +89,11 @@ const DB = {
             })
             .select()
             .single();
+
+        if (error) {
+            console.error('Supabase insert error:', error);
+        }
+
         return { data, error };
     },
 

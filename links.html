@@ -302,26 +302,49 @@
             document.getElementById('addLinkForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                const title = document.getElementById('linkTitle').value;
-                const url = document.getElementById('linkUrl').value;
+                const title = document.getElementById('linkTitle').value.trim();
+                const url = document.getElementById('linkUrl').value.trim();
+                const submitBtn = e.target.querySelector('button[type="submit"]');
 
-                const { data, error } = await DB.createLink({
-                    title,
-                    url,
-                    icon: selectedIcon
-                });
-
-                if (error) {
-                    alert('Error adding link: ' + error.message);
+                if (!title || !url) {
+                    alert('Please fill in both title and URL');
                     return;
                 }
 
-                document.getElementById('linkTitle').value = '';
-                document.getElementById('linkUrl').value = '';
-                selectedIcon = '🔗';
-                document.getElementById('selectedIcon').textContent = '🔗';
+                // Show loading state
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span>⏳</span> Adding...';
+                submitBtn.disabled = true;
 
-                await loadLinks();
+                try {
+                    const { data, error } = await DB.createLink({
+                        title,
+                        url,
+                        icon: selectedIcon
+                    });
+
+                    if (error) {
+                        console.error('Error adding link:', error);
+                        alert('Error adding link: ' + (error.message || 'Please try again'));
+                        return;
+                    }
+
+                    // Clear form
+                    document.getElementById('linkTitle').value = '';
+                    document.getElementById('linkUrl').value = '';
+                    selectedIcon = '🔗';
+                    document.getElementById('selectedIcon').textContent = '🔗';
+
+                    // Reload links
+                    await loadLinks();
+                } catch (err) {
+                    console.error('Unexpected error:', err);
+                    alert('An error occurred. Please check the console for details.');
+                } finally {
+                    // Restore button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
             });
 
             // Icon Picker
